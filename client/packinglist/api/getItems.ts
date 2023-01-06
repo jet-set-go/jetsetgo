@@ -1,9 +1,9 @@
 import { API_URL } from "./config";
 
 
-export type TList= {
-    title:string,
-    _id: string,
+export interface TList {
+    title:string;
+    _id: string;
   }
 
 

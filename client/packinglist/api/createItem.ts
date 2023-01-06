@@ -1,10 +1,10 @@
 import { API_URL } from "./config";
 
-export async function createItem (item:string){
+export async function createItem (input:string){
     const response= await fetch(`${API_URL}`, {
         method: 'POST',
         body: JSON.stringify({
-          item,
+          input,
         }),
         headers: {
           "Content-Type": 'application/json',
