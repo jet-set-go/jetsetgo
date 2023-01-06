@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
 
@@ -13,8 +14,11 @@ const router = createBrowserRouter([
 ]);
 
 const App: React.FC = () => {
-  // TODO: Wrap this with a header and footer or similar
-  return <RouterProvider router={router} />;
+  return (
+    <Layout>
+      <RouterProvider router={router} />
+    </Layout>
+  );
 };
 
 export default App;
