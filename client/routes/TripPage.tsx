@@ -66,7 +66,7 @@ async function handeDelete(packingListId: string){
     </div>
 
 <div id="packinglist">
-<PackingList id = "allitems" lists ={lists}/>
+<PackingList id = "allitems" lists ={lists} item={item}/>
 </div>
 </TripContext.Provider>
   )
