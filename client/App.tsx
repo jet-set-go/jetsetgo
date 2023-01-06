@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Navigation from './components/Layout/Navigation';
+import Navigation from './components/Navigation/Navigation';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
 
