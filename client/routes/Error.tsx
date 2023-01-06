@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRouteError } from 'react-router-dom';
-
 interface RouteError {
   statusText?: string;
   message?: string;
