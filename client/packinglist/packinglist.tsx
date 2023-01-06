@@ -1,17 +1,19 @@
 
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useContext} from 'react'
 import './packlist.css';
 import Checkbox from '@mui/material/Checkbox';
-
+import { deleteItem } from './api/deleteItem';
+import { getItems } from './api/getItems';
+import { createItem } from './api/createItem';
+import { TList } from './api/getItems';
 
 //define the type for the list for typescript
-type TList= {
-  title:string,
-  _id: string,
-}
 
 
-function packinglist  () {
+
+function PackingList  () {
+
+    //const {handleCreateItem,handleDelete}= useContext(taskContextValue)
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -23,41 +25,30 @@ function packinglist  () {
   const [checked, setChecked] = useState([0]);
 
 
+  //when adding a new item
   async function handleCreateItem(e: React.FormEvent){
-      //submitting form will refresh page unless this is there
+      
       e.preventDefault();
-      //presist the data
-      const response= await fetch('http:localhost:3000/tripdetails/:id/packingList', {
-        method: 'POST',
-        body: JSON.stringify({
-          item,
-        }),
-        headers: {
-          "Content-Type": 'application/json',
-        }
-      })
-      const list = await response.json()
-      //append the list that got from backend
+      //declare const list and assign the awaited result of response.json 
+      const list = await createItem(item)
+      //append  to the list state from backend
       setList([...lists,list])
       //clear out input when done
       setItem("")
 
   }
 
-  //connected to button that deleted the list item user doesn't want
-  async function handeDelete(packingListId: string){
-    await fetch('http:localhost:3000/tripdetails/:id/packingList/${packingListId}', {
-      method: 'DELETE',
-    });
+  //function for delete item button
+  async function handleDelete(packingListId: string){
+    await deleteItem(packingListId)
+    //set new state to the list filtered
     setList(lists.filter((list)=>list._id !== packingListId))
   }
 
 //get all packing list for that trip
   useEffect(()=>{
     async function fetchItems (){
-      const newList = await fetch('http:localhost:3000/tripdetails/:id/packingList').then(
-        (response)=> response.json()
-      )
+      const newList = await getItems();
       setList(newList)
     }
     fetchItems()
@@ -72,7 +63,7 @@ function packinglist  () {
       {lists.map((list)=>(
           <li key= {list._id}>
             <Checkbox  {...label} defaultChecked />
-            <button onClick={()=>handeDelete(list._id)}>X</button>
+            <button onClick={()=>handleDelete(list._id)}>X</button>
             {list.title}</li>
         ))}
 
@@ -94,4 +85,4 @@ function packinglist  () {
   
 }
 
-export default packinglist;
+export default PackingList;
