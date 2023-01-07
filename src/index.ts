@@ -1,8 +1,11 @@
 import express, { Request, Response} from 'express';
 import path from 'path';
+import { createItinerary, createPackingList }  from '../database/mongo'
 
 
 const app = express();
+
+app.use(express.json())
 
 app.use(express.static(path.join(__dirname, '../../public')));
 
@@ -10,6 +13,8 @@ app.use(express.static(path.join(__dirname, '../../public')));
 app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../public/index.html'));
 });
+
+app.post('/create-itinerary', createItinerary)
 
 const PORT = 3000;
 
