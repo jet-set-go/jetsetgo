@@ -7,7 +7,7 @@ router.get(
   '/autocomplete',
   placesController.getPlacesAutocomplete,
   (req: Request, res: Response) => {
-    res.send('Hello World!');
+    return res.json(res.locals.places);
   }
 );
 

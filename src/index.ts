@@ -1,8 +1,11 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
 import placesRouter from './routes/places';
+import dotenv from 'dotenv';
 
 const app = express();
+
+dotenv.config();
 
 app.use(express.static(path.join(__dirname, '../../public')));
 
