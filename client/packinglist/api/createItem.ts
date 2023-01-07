@@ -1,15 +1,15 @@
 import { API_URL } from "./config";
+import { TList } from "./getItems";
 
-export async function createItem (input:string){
-    const response= await fetch(`${API_URL}`, {
-        method: 'POST',
-        body: JSON.stringify({
-          input,
-        }),
-        headers: {
-          "Content-Type": 'application/json',
-        }
-      });
-      return response.json();
+export async function createItem(input: string): Promise<TList> {
+  const response = await fetch(`${API_URL}`, {
+    method: "POST",
+    body: JSON.stringify({
+      input,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.json();
 }
-
