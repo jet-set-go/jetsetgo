@@ -16,12 +16,13 @@ import CommentIcon from "@mui/icons-material/Comment";
 import { IconButton, ListSubheader } from "@mui/material";
 import Input from "@mui/joy/Input";
 import LuggageIcon from "@mui/icons-material/Luggage";
-import Button from "@mui/joy/Button";
 import { VariantProp } from "@mui/joy/styles";
 import ThemeProvider from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { purple, red } from "@mui/material/colors";
+import Button from "@mui/material/Button";
 
 const PackingList = () => {
   // const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -126,6 +127,8 @@ const PackingList = () => {
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ "aria-labelledby": labelId }}
+                    defaultChecked
+                    color='success'
                   />
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={`${item}`} />
@@ -142,12 +145,12 @@ const PackingList = () => {
           onChange={(e) => setInput(e.target.value)}
           endDecorator={
             <Button
-              size='md'
-              variant='outlined'
+              size='small'
               value='soft'
-              color='success'
               onClick={handleCreateItem}
               className={styles.addButton}
+              // variant='contained'
+              color='success'
             >
               Add Item
             </Button>
