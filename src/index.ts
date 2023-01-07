@@ -1,9 +1,12 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
+import placesRouter from './routes/places';
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '../../public')));
+
+app.use('/api/places', placesRouter);
 
 // This will catch all the routes and return index.html, and React Router will handle serving the correct page
 app.get('*', (req: Request, res: Response) => {
