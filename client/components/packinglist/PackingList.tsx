@@ -29,12 +29,12 @@ const PackingList = () => {
   //material ui
   const [checked, setChecked] = React.useState([0]);
 
-  const handleToggle = (value: number) => () => {
-    const currentIndex = checked.indexOf(value);
+  const handleToggle = (input: number) => () => {
+    const currentIndex = checked.indexOf(input);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(input);
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -121,7 +121,6 @@ const PackingList = () => {
               >
                 <ListItemIcon>
                   <Checkbox
-                    className='styles.checkbox'
                     edge='start'
                     checked={checked.indexOf(item) !== -1}
                     tabIndex={-1}
@@ -146,6 +145,7 @@ const PackingList = () => {
               size='md'
               variant='outlined'
               value='soft'
+              color='success'
               onClick={handleCreateItem}
               className={styles.addButton}
             >
