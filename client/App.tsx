@@ -2,6 +2,7 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
+import Login from './routes/Login';
 
 const router = createBrowserRouter([
   {
@@ -10,6 +11,11 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   // Additional routes go here
+  { 
+    path: '/login',
+    element: <Login />, 
+    errorElement: <ErrorPage />
+  },
 ]);
 
 const App: React.FC = () => {
