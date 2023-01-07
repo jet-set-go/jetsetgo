@@ -1,7 +1,8 @@
 import React from 'react';
+import TripList from '../components/TripList/TripList';
 
 const HomePage = () => {
-  return <div>JetSetGo Home Page</div>;
+  return <TripList />;
 };
 
 export default HomePage;
