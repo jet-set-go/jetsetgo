@@ -1,23 +1,29 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Navigation from './components/Navigation/Navigation';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
+import Root from './routes/Root';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
+    element: <Root />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/',
+        element: <HomePage />,
+      },
+      // Additional routes go here
+    ],
   },
-  // Additional routes go here
 ]);
 
 const App: React.FC = () => {
   return (
-    <Navigation>
+    <React.StrictMode>
       <RouterProvider router={router} />
-    </Navigation>
+    </React.StrictMode>
   );
 };
 
