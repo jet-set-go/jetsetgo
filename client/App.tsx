@@ -1,21 +1,21 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Navigation from './components/Navigation/Navigation';
-import ErrorPage from './routes/Error';
-import HomePage from './routes/Home';
-import TripPage from './routes/TripPage';
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Navigation from "./components/Navigation/Navigation";
+import ErrorPage from "./routes/Error";
+import HomePage from "./routes/Home";
+import TripPage from "./routes/TripPage";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <HomePage />,
     errorElement: <ErrorPage />,
   },
   {
-    path:"/tripdetails",
+    path: "/tripdetails",
     element: <TripPage />,
-    errorElement:<ErrorPage/>
-  }
+    errorElement: <ErrorPage />,
+  },
 
   // Additional routes go here
 ]);

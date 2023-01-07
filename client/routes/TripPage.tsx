@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import PackingList from "../packinglist/PackingList";
+import PackingList from "../components/packinglist/PackingList";
 const TripPage = () => {
   return (
     <div className='Details-Container'>

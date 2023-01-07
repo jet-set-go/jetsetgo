@@ -13,12 +13,15 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CommentIcon from "@mui/icons-material/Comment";
-import { IconButton } from "@mui/material";
+import { IconButton, ListSubheader } from "@mui/material";
 import Input from "@mui/joy/Input";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import Button from "@mui/joy/Button";
 import { VariantProp } from "@mui/joy/styles";
 import ThemeProvider from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 const PackingList = () => {
   // const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -73,59 +76,85 @@ const PackingList = () => {
 
   //form is for the bottom of the packing list to add another item
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      {["bathing suit", "sunscreen", "snorkeling gear"].map((item) => {
-        const labelId = `checkbox-list-label-${item}`;
+    <Grid item xs={12} md={6}>
+      <Typography sx={{ mt: 4, mb: 2 }} variant='h6' component='div'>
+        Packing List:
+      </Typography>
 
-        return (
-          <ListItem
-            key={item._id}
-            secondaryAction={
-              <IconButton
-                aria-label='delete'
-                size='small'
-                onClick={() => handleDelete(item._id)}
+      <List
+        sx={{
+          width: "25%",
+          maxWidth: 360,
+          height: "40%",
+          maxHeight: 400,
+          position: "fixed",
+          scrollBehavior: "inherit",
+        }}
+      >
+        {[
+          "bathing suit",
+          "sunscreen",
+          "snorkeling gear",
+          "sunhat",
+          "flippers",
+        ].map((item) => {
+          const labelId = `checkbox-list-label-${item}`;
+
+          return (
+            <ListItem
+              key={item._id}
+              secondaryAction={
+                <IconButton
+                  aria-label='delete'
+                  size='small'
+                  onClick={() => handleDelete(item._id)}
+                >
+                  <DeleteIcon fontSize='small' />
+                </IconButton>
+              }
+              disablePadding
+            >
+              <ListItemButton
+                role={undefined}
+                onClick={handleToggle(item)}
+                dense
               >
-                <DeleteIcon fontSize='small' />
-              </IconButton>
-            }
-            disablePadding
-          >
-            <ListItemButton role={undefined} onClick={handleToggle(item)} dense>
-              <ListItemIcon>
-                <Checkbox
-                  className='styles.checkbox'
-                  edge='start'
-                  checked={checked.indexOf(item) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={`${item}`} />
-            </ListItemButton>
-          </ListItem>
-        );
-      })}
-      <Input
-        startDecorator={<LuggageIcon />}
-        size='sm'
-        placeholder='Lets pack…'
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        endDecorator={
-          <Button
-            size='md'
-            variant='outlined'
-            value='soft'
-            color='danger'
-            onClick={handleCreateItem}
-          >
-            Add Item
-          </Button>
-        }
-      />
-    </List>
+                <ListItemIcon>
+                  <Checkbox
+                    className='styles.checkbox'
+                    edge='start'
+                    checked={checked.indexOf(item) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ "aria-labelledby": labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={`${item}`} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+
+        <Input
+          startDecorator={<LuggageIcon />}
+          size='sm'
+          placeholder='Lets pack…'
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          endDecorator={
+            <Button
+              size='md'
+              variant='outlined'
+              value='soft'
+              onClick={handleCreateItem}
+              className={styles.addButton}
+            >
+              Add Item
+            </Button>
+          }
+        />
+      </List>
+    </Grid>
 
     //   <form onSubmit={handleCreateItem}>
     //  <label htmlFor='packing list'>Packing CheckList</label>
