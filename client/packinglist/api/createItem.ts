@@ -1,7 +1,7 @@
 import { API_URL } from "./config";
-import { TList } from "./getItems";
+import { TItem } from "./getItems";
 
-export async function createItem(input: string): Promise<TList> {
+export async function createItem(input: string): Promise<TItem> {
   const response = await fetch(`${API_URL}`, {
     method: "POST",
     body: JSON.stringify({
