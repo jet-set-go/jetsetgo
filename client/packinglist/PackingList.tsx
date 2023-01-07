@@ -94,6 +94,7 @@ const PackingList = () => {
             <ListItemButton role={undefined} onClick={handleToggle(item)} dense>
               <ListItemIcon>
                 <Checkbox
+                  className='styles.checkbox'
                   edge='start'
                   checked={checked.indexOf(item) !== -1}
                   tabIndex={-1}
