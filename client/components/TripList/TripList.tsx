@@ -13,6 +13,14 @@ import AddIcon from '@mui/icons-material/Add';
 import styles from './TripList.module.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
+import ActionPrompt, { PromptAction } from '../ActionPrompt/ActionPrompt';
+
+interface DummyTrip {
+  id: string;
+  destination: string;
+  startDate: string;
+  endDate: string;
+}
 
 const dummyTrips = [
   {
@@ -36,12 +44,37 @@ const dummyTrips = [
 ];
 
 const TripList = () => {
+  const [deletePrompt, setDeletePrompt] = React.useState<DummyTrip | null>(
+    null
+  );
+
   const handleDelete = (id: string) => {
     console.log('delete', id);
   };
 
+  const deletePromptActions: PromptAction[] = [
+    {
+      label: 'Cancel',
+      onClick: () => setDeletePrompt(null),
+    },
+    {
+      label: 'Delete',
+      onClick: () => {
+        handleDelete(deletePrompt!.id);
+        setDeletePrompt(null);
+      },
+    },
+  ];
+
   return (
     <div className={styles.container}>
+      <ActionPrompt
+        open={Boolean(deletePrompt)}
+        onClose={() => setDeletePrompt(null)}
+        title="Delete Trip"
+        content={`Are you sure you want to permanently delete your trip to ${deletePrompt?.destination}?`}
+        actions={deletePromptActions}
+      />
       <Box mb={2}>
         <Button variant="contained" startIcon={<AddIcon />}>
           Add Trip
@@ -52,12 +85,8 @@ const TripList = () => {
         <List sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {dummyTrips.map((trip) => (
             // TODO: Link component should link to dashboard for specific trip once routing is fleshed out
-            <div className={styles.card}>
-              <Link
-                key={trip.id}
-                to={`/trip/${trip.id}`}
-                className={styles.link}
-              >
+            <div key={trip.id} className={styles.card}>
+              <Link to={`/trip/${trip.id}`} className={styles.link}>
                 <ListItem key={trip.id}>
                   <ListItemText
                     primary={trip.destination}
@@ -75,14 +104,7 @@ const TripList = () => {
                   />
                 </ListItem>
               </Link>
-              <IconButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log('stopPropagation');
-                  e.stopPropagation;
-                  handleDelete(trip.id);
-                }}
-              >
+              <IconButton onClick={(e) => setDeletePrompt(trip)}>
                 <DeleteIcon />
               </IconButton>
             </div>
