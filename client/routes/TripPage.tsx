@@ -7,9 +7,6 @@ const TripPage = () => {
 
 
 
-
-
-
 return (
     <div className= "Details-Container">
 <h1> Your trip</h1>
