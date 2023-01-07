@@ -12,7 +12,7 @@ import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import styles from './TripList.module.css';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ActionPrompt, { PromptAction } from '../ActionPrompt/ActionPrompt';
 
 interface DummyTrip {
@@ -48,6 +48,12 @@ const TripList = () => {
     null
   );
 
+  const navigate = useNavigate();
+
+  const handleCreateTrip = () => {
+    navigate('/trip/new');
+  };
+
   const handleDelete = (id: string) => {
     console.log('delete', id);
   };
@@ -76,7 +82,11 @@ const TripList = () => {
         actions={deletePromptActions}
       />
       <Box mb={2}>
-        <Button variant="contained" startIcon={<AddIcon />}>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={handleCreateTrip}
+        >
           Add Trip
         </Button>
       </Box>
