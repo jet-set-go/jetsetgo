@@ -2,9 +2,9 @@ import { API_URL } from "./config";
 
 //packing list Item
 export interface TItem {
-  title: string;
+  name: string;
+  checked: boolean;
   _id: string;
-  packed: boolean;
 }
 
 export async function getItems(): Promise<TItem[]> {

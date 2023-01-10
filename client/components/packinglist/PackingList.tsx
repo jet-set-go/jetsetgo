@@ -13,7 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, ListSubheader } from "@mui/material";
+import { IconButton } from "@mui/material";
 import Input from "@mui/joy/Input";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import Grid from "@mui/material/Grid";
@@ -60,7 +60,7 @@ const PackingList = () => {
   async function handleCheckItem(index: number) {
     const newItemList = [...items];
     //declare const list and assign the awaited result of response.json
-    newItemList[index].packed = true;
+    newItemList[index].checked = true;
     //append  to the list state from backend
     setItem(newItemList);
   }
