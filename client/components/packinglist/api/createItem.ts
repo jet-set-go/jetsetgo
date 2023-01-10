@@ -5,7 +5,8 @@ export async function createItem(input: string): Promise<TItem> {
   const response = await fetch(`${API_URL}`, {
     method: "POST",
     body: JSON.stringify({
-      input,
+      title: input,
+      packed: false,
     }),
     headers: {
       "Content-Type": "application/json",

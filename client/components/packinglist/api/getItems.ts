@@ -4,6 +4,7 @@ import { API_URL } from "./config";
 export interface TItem {
   title: string;
   _id: string;
+  packed: boolean;
 }
 
 export async function getItems(): Promise<TItem[]> {

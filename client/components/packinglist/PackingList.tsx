@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { deleteItem } from "./api/deleteItem";
 import { getItems } from "./api/getItems";
 import { createItem } from "./api/createItem";
+import { checkItem } from "./api/checkItem";
 import { TItem } from "./api/getItems";
 import styles from "./PackingList.module.css";
 
@@ -12,16 +13,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CommentIcon from "@mui/icons-material/Comment";
 import { IconButton, ListSubheader } from "@mui/material";
 import Input from "@mui/joy/Input";
 import LuggageIcon from "@mui/icons-material/Luggage";
-import { VariantProp } from "@mui/joy/styles";
-import ThemeProvider from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { purple, red } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 
 const PackingList = () => {
@@ -60,6 +56,15 @@ const PackingList = () => {
     setInput("");
   }
 
+  //for todo list...trying to get it to save to DB
+  async function handleCheckItem(index: number) {
+    const newItemList = [...items];
+    //declare const list and assign the awaited result of response.json
+    newItemList[index].packed = true;
+    //append  to the list state from backend
+    setItem(newItemList);
+  }
+
   //function for delete item button
   async function handleDelete(packingListId: string) {
     await deleteItem(packingListId);
@@ -92,13 +97,7 @@ const PackingList = () => {
           scrollBehavior: "inherit",
         }}
       >
-        {[
-          "bathing suit",
-          "sunscreen",
-          "snorkeling gear",
-          "sunhat",
-          "flippers",
-        ].map((item) => {
+        {[items].map((item) => {
           const labelId = `checkbox-list-label-${item}`;
 
           return (
@@ -117,18 +116,18 @@ const PackingList = () => {
             >
               <ListItemButton
                 role={undefined}
-                onClick={handleToggle(item)}
+                // onClick={handleToggle(item)}
                 dense
               >
                 <ListItemIcon>
                   <Checkbox
                     edge='start'
-                    checked={checked.indexOf(item) !== -1}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ "aria-labelledby": labelId }}
                     defaultChecked
                     color='success'
+                    onClick={handleCheckItem(item._id)}
                   />
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={`${item}`} />
