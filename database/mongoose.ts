@@ -5,7 +5,7 @@ import { Schema, model, connect } from 'mongoose'
 
 import Trip from '../models/trip'
 
-mongoose.connect('mongodb+srv://jmarchant:XyIWQYpZuJwGkKbN@default.xb0hjgi.mongodb.net/goblinShark?retryWrites=true&w=majority').then(() => {
+mongoose.connect("mongodb+srv://jmarchant:XyIWQYpZuJwGkKbN@default.xb0hjgi.mongodb.net/goblinShark?retryWrites=true&w=majority").then(() => {
     console.log('Connection established!')
 }).catch(() => {
     console.log('Connection failed :(')
