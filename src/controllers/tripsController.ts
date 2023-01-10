@@ -10,6 +10,8 @@ export const createTrip = async (
     const { name } = req.body;
     const placeData = res.locals.place;
 
+    console.log('placeData', placeData);
+
     const trip = {
       name,
       destination: {
@@ -18,9 +20,9 @@ export const createTrip = async (
         location: {
           lat: placeData.geometry.location.lat,
           lng: placeData.geometry.location.lng,
-        }
-      }
-    }
+        },
+      },
+    };
 
     const createdTrip = new Trip(trip);
     const result = await createdTrip.save();

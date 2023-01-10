@@ -54,7 +54,7 @@ export const getPlaceDetails = async (
     });
 
     console.log('placeData', data);
-    res.locals.place = data;
+    res.locals.place = data.result;
     return next();
   } catch (error) {
     return next(error);
