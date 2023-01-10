@@ -4,6 +4,7 @@ import CreateTrip from './routes/CreateTrip';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
 import Root from './routes/Root';
+import TripDashboard, { loader as tripLoader } from './routes/TripDashboard';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
       {
         path: '/trip/new',
         element: <CreateTrip />,
+      },
+      {
+        path: '/trip/:tripId',
+        element: <TripDashboard />,
+        loader: tripLoader,
       },
       // Additional routes go here
     ],

@@ -1,6 +1,6 @@
 import { Autocomplete, Button, TextField, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Form } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import styles from './CreateTripForm.module.css';
 interface Place {
   name: string;
@@ -8,6 +8,8 @@ interface Place {
 }
 
 const CreateTripForm = () => {
+  const navigate = useNavigate();
+
   const [destination, setDestination] = React.useState('');
   const [debounceDestination, setDebounceDestination] = React.useState('');
   const [destinationOptions, setDestinationOptions] = React.useState<Place[]>(
@@ -96,7 +98,8 @@ const CreateTripForm = () => {
     });
 
     if (response.status === 201) {
-      // Redirect to trip page
+      const data = await response.json();
+      navigate(`/trip/${data._id}`);
     }
   };
 
@@ -110,7 +113,11 @@ const CreateTripForm = () => {
       />
       <Form onSubmit={handleSubmit}>
         <div className={styles.form}>
-          <Typography variant="h6" component="h1">
+          <Typography
+            variant="h6"
+            component="h1"
+            sx={{ minWidth: 480, textAlign: 'center' }}
+          >
             Plan your next adventure today!
           </Typography>
           <TextField
@@ -129,9 +136,6 @@ const CreateTripForm = () => {
             inputValue={destination}
             onInputChange={(event, newInputValue) => {
               setDestination(newInputValue);
-            }}
-            onChange={(event, newValue) => {
-              console.log('newValue: ', newValue);
             }}
             renderInput={(params) => (
               <TextField
