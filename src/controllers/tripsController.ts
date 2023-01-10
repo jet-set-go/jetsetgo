@@ -7,7 +7,7 @@ export const createTrip = async (
   next: NextFunction
 ) => {
   try {
-    const { name } = req.body;
+    const { name, startDate, endDate } = req.body;
     const placeData = res.locals.place;
 
     console.log('placeData', placeData);
@@ -22,6 +22,8 @@ export const createTrip = async (
           lng: placeData.geometry.location.lng,
         },
       },
+      startDate,
+      endDate,
     };
 
     const createdTrip = new Trip(trip);
