@@ -4,8 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import { Schema, model, connect } from "mongoose";
 import { makeNewItem } from "../models/trip";
 
-
-mport Trip from '../models/tripController'
+import Trip from "../models/tripController";
 
 export const createTrip = async (
   req: Request,
