@@ -1,21 +1,19 @@
-import mongoose from 'mongoose'
-
-import { packingListItemSchema } from "./list-item";
+import mongoose from 'mongoose';
 
 export interface ITrip {
   name: string;
   destination: {
-    name: string,
+    name: string;
     location: {
-        lat: number,
-        lng: number
-    },
-    place_id: string
-  },
+      lat: number;
+      lng: number;
+    };
+    place_id: string;
+  };
   packingList: {
-    name: string,
-    checked: boolean
-  }[],
+    name: string;
+    checked: boolean;
+  }[];
   startDate: Date;
   endDate: Date;
 }
@@ -36,13 +34,12 @@ export const tripSchema = new mongoose.Schema<ITrip>({
       checked: { type: Boolean, required: true },
     },
   ],
-  startDate: {type: Date, required: true},
-  endDate: {type: Date, required: true}
-
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
 });
 
 const Trip =
   (mongoose.models.Trip as mongoose.Model<ITrip>) ||
-  mongoose.model("Trip", tripSchema);
+  mongoose.model('Trip', tripSchema);
 
 export default Trip;
