@@ -129,7 +129,7 @@ const PackingList = () => {
                     inputProps={{ "aria-labelledby": labelId }}
                     defaultChecked
                     color='success'
-                    onClick={handleCheckItem(item._id)}
+                    // onClick={handleCheckItem(item._id)}
                   />
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={`${item}`} />
