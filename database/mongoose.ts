@@ -4,18 +4,8 @@ import { Request, Response, NextFunction } from "express";
 import { Schema, model, connect } from "mongoose";
 import { makeNewItem } from "../models/trip";
 
-import Trip from "../models/trip";
 
-mongoose
-  .connect(
-    "mongodb+srv://jmarchant:XyIWQYpZuJwGkKbN@default.xb0hjgi.mongodb.net/goblinShark?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    console.log("Connection established!");
-  })
-  .catch(() => {
-    console.log("Connection failed :(");
-  });
+mport Trip from '../models/tripController'
 
 export const createTrip = async (
   req: Request,

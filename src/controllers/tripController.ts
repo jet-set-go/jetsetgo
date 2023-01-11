@@ -1,21 +1,21 @@
-import { BookOnline } from "@mui/icons-material";
+import mongoose from 'mongoose'
 
-const mongoose = require("mongoose");
+import { packingListItemSchema } from "./list-item";
 
 export interface ITrip {
   name: string;
   destination: {
-    name: string;
+    name: string,
     location: {
-      lat: number;
-      lng: number;
-    };
-    place_id: string;
-  };
+        lat: number,
+        lng: number
+    },
+    place_id: string
+  },
   packingList: {
-    name: string;
-    checked: boolean;
-  }[];
+    name: string,
+    checked: boolean
+  }[],
   startDate: Date;
   endDate: Date;
 }
@@ -36,18 +36,13 @@ export const tripSchema = new mongoose.Schema<ITrip>({
       checked: { type: Boolean, required: true },
     },
   ],
-  // startDate: { type: Date, required: true },
-  // endDate: { type: Date, required: true },
+  startDate: {type: Date, required: true},
+  endDate: {type: Date, required: true}
+
 });
 
-//format for items
-export const makeNewItem = (task: string) => {
-  return {
-    item: task,
-    packed: false,
-  };
-};
-
-const Trip = mongoose.model("Trip", tripSchema);
+const Trip =
+  (mongoose.models.Trip as mongoose.Model<ITrip>) ||
+  mongoose.model("Trip", tripSchema);
 
 export default Trip;
