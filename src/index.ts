@@ -5,7 +5,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import path from 'path';
-import '../server/controllers/googleAuth';
+import './controllers/googleAuth';
 import mongoose from 'mongoose';
 ;
 
