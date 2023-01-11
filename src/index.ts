@@ -1,11 +1,9 @@
-import express, { Request, Response } from 'express';
-import path from 'path';
 import placesRouter from './routes/places';
 import tripsRouter from './routes/trips';
 import dotenv from 'dotenv';
+import express, { Request, Response } from 'express';
+import path from 'path';
 import mongoose from 'mongoose';
-
-const app = express();
 
 dotenv.config();
 
@@ -14,9 +12,11 @@ mongoose
   .then(() => {
     console.log('Connection established!');
   })
-  .catch((error: any) => {
-    console.log('Connection failed :(', error);
+  .catch(() => {
+    console.log('Connection failed :(');
   });
+
+const app = express();
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../public')));
