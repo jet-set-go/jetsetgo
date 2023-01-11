@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CreateTrip from './routes/CreateTrip';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
+import Login from './auth/Login';
 import Root from './routes/Root';
 import TripDashboard, { loader as tripLoader } from './routes/TripDashboard';
 import WeatherSummary from './components/Weather/Weather'
@@ -27,12 +28,17 @@ const router = createBrowserRouter([
         loader: tripLoader,
       },
       // Additional routes go here
-  {
-    path: '/weather',
-    element: <WeatherSummary lat={27.95} lon={-82.45} /* scale={'imperial'} */ location={'Tampa, US'}/>,
-    errorElement: <ErrorPage />,
-  },
+      {
+        path: '/weather',
+        element: <WeatherSummary lat={27.95} lon={-82.45} /* scale={'imperial'} */ location={'Tampa, US'} />,
+        errorElement: <ErrorPage />,
+      },
     ],
+  },
+  {
+    path: '/login',
+    element: <Login />,
+    errorElement: <ErrorPage />
   },
 ])
 
