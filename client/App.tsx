@@ -1,8 +1,9 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ErrorPage from './routes/Error';
-import HomePage from './routes/Home';
-import WeatherSummary from './routes/Weather';
+import React from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Navigation from './components/Navigation/Navigation'
+import ErrorPage from './routes/Error'
+import HomePage from './routes/Home'
+import WeatherSummary from './components/Weather/Weather'
 
 const router = createBrowserRouter([
   {
@@ -12,15 +13,18 @@ const router = createBrowserRouter([
   },
   {
     path: '/weather',
-    element: <WeatherSummary/>,
-    errorElement: <ErrorPage/>,
+    element: <WeatherSummary lat={27.95} lon={-82.45} /* scale={'imperial'} */ location={'Tampa, US'}/>,
+    errorElement: <ErrorPage />,
   },
   // Additional routes go here
-]);
+])
 
 const App: React.FC = () => {
-  // TODO: Wrap this with a header and footer or similar
-  return <RouterProvider router={router} />;
-};
+  return (
+    <Navigation>
+      <RouterProvider router={router} />
+    </Navigation>
+  )
+}
 
-export default App;
+export default App

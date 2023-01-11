@@ -1,8 +1,9 @@
 node_modules
-
+.eslintrc.json
+babel.config.json
 .env
 .env.*
 
 dist
 
-public/bundle.js
+/public/bundle.js

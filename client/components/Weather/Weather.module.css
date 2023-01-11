@@ -1,0 +1,57 @@
+
+/* layout: */
+/* styling: */
+
+html {
+/* layout: */
+  box-sizing: border-box;
+/* styling: */
+}
+.container {
+  /* layout:   */
+  display: flex;
+  justify-content: space-between;
+
+  width: 30%;
+  height: 60%;
+  padding: 20px;
+/* styling: */
+  background-color: #2196f3;
+  color: white;
+  border-radius: 15px 15px 15px 15px;
+}
+.containerleft {
+  /* layout:   */
+  display:flex;
+  flex-direction:column;
+  
+/* styling: */
+}
+.containerConditions {
+  display: flex;
+  justify-content: space-around;
+}
+.containerTemps {
+  /* layout:   */
+ display: flex; 
+ justify-content: space-between;
+/* styling: */
+}
+.currentTemp {
+  font-size: 2rem;
+}
+.containerRight {
+/* layout: */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+/* styling: */
+}
+.location {
+/* layout: */
+  text-align:right;
+/* styling: */
+
+}
+.scaleToggle {
+}
