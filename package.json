@@ -24,6 +24,7 @@
     "@emotion/styled": "^11.10.5",
     "@googlemaps/google-maps-services-js": "^3.3.26",
     "@mui/icons-material": "^5.11.0",
+    "@mui/joy": "^5.0.0-alpha.61",
     "@mui/material": "^5.11.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",

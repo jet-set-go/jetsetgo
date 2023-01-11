@@ -7,6 +7,7 @@ import Login from './auth/Login';
 import Root from './routes/Root';
 import TripDashboard, { loader as tripLoader } from './routes/TripDashboard';
 import WeatherSummary from './components/Weather/Weather'
+import TripPage from './routes/TripPage';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,12 @@ const router = createBrowserRouter([
         element: <WeatherSummary lat={27.95} lon={-82.45} /* scale={'imperial'} */ location={'Tampa, US'} />,
         errorElement: <ErrorPage />,
       },
+      {
+      path: "/tripdetails/",
+      element: <TripPage />,
+      errorElement: <ErrorPage />,
+    },
+  
     ],
   },
   {
