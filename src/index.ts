@@ -1,7 +1,16 @@
+import * as dotenv from 'dotenv'
 import express, { Request, Response} from 'express';
 import path from 'path';
 import { createTrip, getTrip }  from '../database/mongoose'
+import mongoose from 'mongoose'
 
+dotenv.config()
+
+mongoose.connect(process.env.MONGODB_URI || '').then(() => {
+    console.log('Connection established!')
+}).catch(() => {
+    console.log('Connection failed :(')
+})
 
 const app = express();
 
