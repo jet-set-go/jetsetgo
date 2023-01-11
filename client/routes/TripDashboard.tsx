@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { ITrip } from '../../src/models/trip';
+import TripSummary from '../components/TripSummary/TripSummary';
 
 export const loader = async ({ params }: { params: any }) => {
   const { tripId } = params;
@@ -15,7 +16,7 @@ const TripDashboard = () => {
   return (
     <div>
       <div>TripDashboard</div>
-      <p>{JSON.stringify(trip)}</p>
+      <TripSummary trip={trip} />
     </div>
   );
 };
