@@ -3,8 +3,11 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     userId: {type: String, unique: true},
-    username: {type: String, unique: true},
-    password: {type: String, required: true}
+    firstName: {type: String},
+    lastName: {type: String},
+    email: {type: String, required: true, unique: true}
+    // username: {type: String, unique: true},
+    // password: {type: String, required: true}
   });
   
 const User = new mongoose.model('User', userSchema);

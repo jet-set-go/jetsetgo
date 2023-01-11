@@ -11,11 +11,12 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/google/callback",
     passReqToCallback   : true
 },
-function(request: Request, accessToken: any, refreshToken: any, profile: any, done: any) {
+function (request: any, accessToken: any, refreshToken: any, profile: any, done: any) {
     console.log(profile);
-    User.findOne({ userId: profile.id }, { upsert: true }, function (err: any, user: object) {
-    return done(err, user);
-    })
+    // User.findOne({ userId: profile.id }, { upsert: true }, function (err: any, user: object) {
+    // return done(err, user);
+    // })
+    done(null, profile);
     }
 ));
 
@@ -27,7 +28,7 @@ passport.serializeUser(function(user: any, done) {
 
 // used to deserialize the user
 passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err: any, user: any) {
+    User.findOne({userId: id}, function(err: any, user: any) {
         done(err, user);
     });
 });
