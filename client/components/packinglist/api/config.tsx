@@ -1,1 +1,1 @@
-export const API_URL = "http:localhost:3000/:id/tripdetails/packingList";
+export const API_URL = "http:localhost:3000/:id";
