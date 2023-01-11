@@ -14,10 +14,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import CardTravelIcon from '@mui/icons-material/CardTravel';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import LogoutIcon from '@mui/icons-material/Logout';
 import Logo from '../Logo/Logo';
 import Main from './Main';
 import AppBar from './AppBar';
@@ -25,21 +21,20 @@ import DrawerHeader from './DrawerHeader';
 
 const drawerWidth = 240;
 
-interface DrawerItem {
+export interface DrawerItem {
   text: string;
   icon: React.ReactElement;
-  onClick?: () => void;
+  onClick: (event: React.MouseEvent<HTMLLIElement>) => void;
 }
 
-// TODO: Temporary for visuals, should be replaced from the page component and include a callback for click events for each item
-const drawerItems: DrawerItem[] = [
-  { text: 'New Trip', icon: <AddCircleOutlineIcon /> },
-  { text: 'My Trips', icon: <CardTravelIcon /> },
-  { text: 'My Profile', icon: <AccountBoxIcon /> },
-  { text: 'Logout', icon: <LogoutIcon /> },
-];
+interface NavigationProps {
+  drawerItems?: DrawerItem[];
+}
 
-const Navigation: React.FC<React.PropsWithChildren> = ({ children }) => {
+const Navigation: React.FC<React.PropsWithChildren<NavigationProps>> = ({
+  children,
+  drawerItems,
+}) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -56,53 +51,57 @@ const Navigation: React.FC<React.PropsWithChildren> = ({ children }) => {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {drawerItems && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Logo />
         </Toolbar>
       </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+      {drawerItems && (
+        <Drawer
+          sx={{
             width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {drawerItems.map((item) => (
-            <ListItem key={item.text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <Main open={open}>
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {drawerItems.map((item) => (
+              <ListItem key={item.text} disablePadding onClick={item.onClick}>
+                <ListItemButton>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+      )}
+      <Main open={drawerItems ? open : true}>
         <DrawerHeader />
         {children}
       </Main>
