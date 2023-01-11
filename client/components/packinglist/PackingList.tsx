@@ -5,6 +5,7 @@ import { createItem } from "./api/createItem";
 import { checkItem } from "./api/checkItem";
 import { TItem } from "./api/getItems";
 import styles from "./PackingList.module.css";
+import axios from "axios";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -19,32 +20,19 @@ import LuggageIcon from "@mui/icons-material/Luggage";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useParams } from "react-router-dom";
 
 const PackingList = () => {
-  // const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
-  //material ui
-  const [checked, setChecked] = React.useState([0]);
-
-  const handleToggle = (input: number) => () => {
-    const currentIndex = checked.indexOf(input);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(input);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
-
   //set input state
   const [input, setInput] = useState("");
   //set list state
   //change to item
   const [items, setItem] = useState<TItem[]>([]);
+  //check off
+  const [checked, setChecked] = React.useState([0]);
 
+  //get the current trip id
+  const { tripId } = useParams();
   //when adding a new item
   async function handleCreateItem(e: React.FormEvent) {
     e.preventDefault();
@@ -72,13 +60,27 @@ const PackingList = () => {
     setItem(items.filter((item) => item._id !== packingListId));
   }
 
+  //will rerun every time trip changes
   useEffect(() => {
+    if (tripId) return;
     async function fetchItems() {
-      const newItem = await getItems();
+      console.log(tripId);
+      const newItem = await getItems(tripId);
       setItem(newItem);
     }
     fetchItems();
   }, []);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http:localhost:3000/:id/tripdetails/packingList")
+  //     .then((res) => {
+  //       setItem(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error when useEffect list");
+  //     });
+  // }, []);
 
   //form is for the bottom of the packing list to add another item
   return (
@@ -97,7 +99,7 @@ const PackingList = () => {
           scrollBehavior: "inherit",
         }}
       >
-        {[items].map((item) => {
+        {items.map((item) => {
           const labelId = `checkbox-list-label-${item}`;
 
           return (
@@ -157,32 +159,6 @@ const PackingList = () => {
         />
       </List>
     </Grid>
-
-    //   <form onSubmit={handleCreateItem}>
-    //  <label htmlFor='packing list'>Packing CheckList</label>
-    //   <input
-    //    id='packing-input'
-    //    value={input}
-    //   placeholder='Enter a item..'
-    //   onChange={(e) =>
-    //   //save what they type
-    //   setInput(e.target.value)
-    //    }
-    //   />
-    //   <button className='button-addItem'>Add Item</button>
-    //   </form>
-
-    // <div className={styles.container}>
-    //   <ul className='items'>
-    //     {items.map((item) => (
-    //       <li key={item._id}>
-    //         <button onClick={() => handleDelete(item._id)}>X</button>
-    //         {item.title}
-    //       </li>
-    //     ))}
-    //   </ul>
-
-    // </div>
   );
 };
 

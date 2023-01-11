@@ -46,9 +46,10 @@ export const getPackingList = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { listId } = req.params.id;
   try {
-    const currentPacking = await Trip.findById(req.params.id);
-    console.log("currentPacking", currentPacking.packingList);
+    const currentPacking = await Trip.findById(listId);
+    //console.log("currentPacking", currentPacking.packingList);
     res.locals.currentPackingList = currentPacking.packingList;
     next();
   } catch (e) {
@@ -69,12 +70,6 @@ export const createItem = async (
   res: Response,
   next: NextFunction
 ) => {
-  // const { id, item } = req.body;
-  // console.log("NewItem:", newItem);
-  console.log("req.body", req.body);
-  console.log("req.body.item", req.body.item);
-  console.log("req.params.id", req.params.id);
-
   try {
     const trip = await Trip.findById(req.params.id);
     trip.packingList.push({
@@ -101,15 +96,12 @@ export const deleteItem = async (
 ) => {
   try {
     //get current packing List
-    const currentPacking = await Trip.findById(req.params.id);
-    console.log("currentPacking", currentPacking.packingList);
-
-    const ditem = await currentPacking.packingList.filter(
-      (item: Object) => item.name == req.body.name
-    );
-    const result = await ditem.save();
-    console.log("result", result);
-    res.locals.stillPack = result.packingList;
+    const itemId = req.params.itemId;
+    console.log("itemId", itemId);
+    const deck = await Trip.packingList.findByIdAndDelete(itemId);
+    console.log("deck", deck);
+    res.json(deck);
+    next();
   } catch (e) {
     return next({
       log: "Error in mongoose.createItem.",

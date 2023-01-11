@@ -7,7 +7,8 @@ export interface TItem {
   _id: string;
 }
 
-export async function getItems(): Promise<TItem[]> {
+export async function getItems(tripId): Promise<TItem[]> {
   const response = await fetch(`${API_URL}`);
+  console.log("respones", response);
   return response.json();
 }
