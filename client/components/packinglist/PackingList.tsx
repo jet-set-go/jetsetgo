@@ -99,8 +99,8 @@ const PackingList = () => {
           scrollBehavior: "inherit",
         }}
       >
-        {items.map((item) => {
-          const labelId = `checkbox-list-label-${item}`;
+        {testPack.map((item) => {
+          const labelId = `checkbox-list-label-${item.name}`;
 
           return (
             <ListItem
@@ -132,7 +132,7 @@ const PackingList = () => {
                     // onClick={handleCheckItem(item._id)}
                   />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={`${item}`} />
+                <ListItemText id={labelId} primary={`${item.name}`} />
               </ListItemButton>
             </ListItem>
           );
@@ -161,5 +161,25 @@ const PackingList = () => {
     </Grid>
   );
 };
+
+const testPack = [
+  {
+    name: "Shorts",
+    checked: false,
+    _id: "1101",
+  },
+  {
+    name: "Shirts",
+    checked: false,
+    _id: "1102",
+  },
+  {
+    name: "Pants",
+    checked: false,
+    _id: "1103",
+  },
+];
+
+// const testPack = [{ name: "Shorts" }, { name: "Shirts" }, { name: "Pants" }];
 
 export default PackingList;

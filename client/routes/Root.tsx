@@ -26,6 +26,7 @@ const Root = () => {
         icon: <AccountBoxIcon />,
         onClick: () => navigate('profile'),
       },
+
       { text: 'Logout', icon: <LogoutIcon />, onClick: () => {} },
     ],
     [navigate]
