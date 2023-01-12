@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "/tripdetails",
+        path: "/tripdetails/:tripId",
         element: <TripPage />,
         errorElement: <ErrorPage />,
       },
