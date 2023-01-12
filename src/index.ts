@@ -1,5 +1,6 @@
 import placesRouter from './routes/places';
 import tripsRouter from './routes/trips';
+import weatherRouter from './routes/weather'
 import packingListRouter from './routes/packingList'
 import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
@@ -58,6 +59,7 @@ app.get ('/auth/google/failure', (req: Request, res: Response) => {
 app.use('/api/places', placesRouter);
 app.use('/api/trips', tripsRouter);
 app.use('/api/packingList', packingListRouter)
+app.use('/api/weather', weatherRouter)
 
 // This will catch all the routes and return index.html, and React Router will handle serving the correct page
 app.get("*", (req: Request, res: Response) => {
