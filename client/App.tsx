@@ -12,29 +12,24 @@ import TripPage from './routes/TripPage';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <HomePage />,
       },
       {
-        path: "/trip/new",
+        path: '/trip/new',
         element: <CreateTrip />,
       },
       {
-        path: "/trip/:tripId",
+        path: '/trip/:tripId',
         element: <TripDashboard />,
         loader: tripLoader,
       },
       // Additional routes go here
-      {
-        path: '/tripdetails/',
-        element: <TripPage />,
-        errorElement: <ErrorPage />,
-      },
     ],
   },
   {
