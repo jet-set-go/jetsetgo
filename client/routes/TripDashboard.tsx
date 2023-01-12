@@ -2,6 +2,7 @@ import React from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { ITrip } from '../../src/models/trip';
 import TripSummary from '../components/TripSummary/TripSummary';
+import WeatherSummary from '../components/Weather/Weather';
 
 export const loader = async ({ params }: { params: any }) => {
   const { tripId } = params;
@@ -17,6 +18,11 @@ const TripDashboard = () => {
     <div>
       <div>TripDashboard</div>
       <TripSummary trip={trip} />
+      <WeatherSummary
+        lat={trip.destination.location.lat}
+        lon={trip.destination.location.lng}
+        location={trip.destination.name}
+      />
     </div>
   );
 };
