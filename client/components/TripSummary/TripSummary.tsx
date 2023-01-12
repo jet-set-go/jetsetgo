@@ -24,6 +24,7 @@ const TripSummary: React.FC<TripSummaryProps> = ({ trip }) => {
       >
         <CardContent sx={{ height: '100%' }}>
           <div className={styles.content}>
+            {/* Only show the destination as a subtitle if it differs from the trip name */}
             {trip.name !== trip.destination.name ? (
               <Typography variant="subtitle1" component="h2" textAlign="right">
                 {trip.destination.name}
