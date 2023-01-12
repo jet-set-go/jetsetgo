@@ -4,6 +4,7 @@
   justify-content: center;
   height: 100%;
   gap: 0.25rem;
+  cursor: pointer;
 }
 
 .svg {
