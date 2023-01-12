@@ -3,3 +3,9 @@
   position: fixed;
   border-style: solid;
 }
+.packingInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}

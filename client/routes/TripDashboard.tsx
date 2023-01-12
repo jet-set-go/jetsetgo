@@ -1,8 +1,10 @@
-import React from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { ITrip } from '../../src/models/trip';
-import TripSummary from '../components/TripSummary/TripSummary';
-import WeatherSummary from '../components/Weather/Weather';
+import { ObjectId } from "mongoose";
+import React from "react";
+import { useLoaderData } from "react-router-dom";
+import { ITrip } from "../../src/models/trip";
+import PackingList from "../components/packinglist/PackingList";
+import TripSummary from "../components/TripSummary/TripSummary";
+import WeatherSummary from "../components/Weather/Weather";
 
 export const loader = async ({ params }: { params: any }) => {
   const { tripId } = params;
@@ -12,7 +14,7 @@ export const loader = async ({ params }: { params: any }) => {
 };
 
 const TripDashboard = () => {
-  const trip = useLoaderData() as ITrip;
+  const trip = useLoaderData() as ITrip & { _id: ObjectId };
 
   return (
     <div>
@@ -23,6 +25,7 @@ const TripDashboard = () => {
         lon={trip.destination.location.lng}
         location={trip.destination.name}
       />
+      <PackingList trip={trip} />
     </div>
   );
 };

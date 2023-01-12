@@ -14,13 +14,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton } from "@mui/material";
+import { IconButton, Input, TextField } from "@mui/material";
 // import Input from "@mui/joy/Input";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { useParams } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import { ITrip } from "../../../src/models/trip";
 import { ObjectId } from "mongoose";
 
@@ -32,29 +32,28 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   //set input state
   const [input, setInput] = useState("");
   //set list state
-  const [items, setItems] = useState<TItem[]>([]);
+  const [items, setItems] = useState<TItem[]>(trip.packingList);
   //check off
   // const [checked, setChecked] = React.useState([0]);
 
-  async function handleCreateItem(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleCreateItem(e: React.MouseEvent) {
     //declare const list and assign the awaited result of response.json
-    const item = await createItem(input, trip._id.toString());
+    const newItems = await createItem(input, trip._id.toString());
     //append  to the list state from backend
-    setItems([...items, item]);
+    setItems(newItems);
 
     //clear out input when done
     setInput("");
   }
 
   //for todo list...trying to get it to save to DB
-  async function handleCheckItem(index: number) {
-    const newItemList = [...items];
-    //declare const list and assign the awaited result of response.json
-    newItemList[index].checked = true;
-    //append  to the list state from backend
-    setItems(newItemList);
-  }
+  // async function handleCheckItem(index: number) {
+  //   const newItemList = [...items];
+  //   //declare const list and assign the awaited result of response.json
+  //   newItemList[index].checked = true;
+  //   //append  to the list state from backend
+  //   setItems(newItemList);
+  // }
 
   //function for delete item button
   // async function handleDelete(input, trip._id.toString()) {
@@ -64,13 +63,13 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   // }
 
   //will grab the items associated with the trip and update everytime it changes
-  useEffect(() => {
-    async function fetchItems() {
-      const newItems = await getItems(trip._id.toString());
-      setItems(newItems);
-    }
-    fetchItems();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchItems() {
+  //     const newItems = await getItems(trip._id.toString());
+  //     setItems(newItems);
+  //   }
+  //   fetchItems();
+  // }, []);
 
   //form is for the bottom of the packing list to add another item
   return (
@@ -89,12 +88,12 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
           scrollBehavior: "inherit",
         }}
       >
-        {items.map((item) => {
+        {items.map((item, index) => {
           const labelId = `checkbox-list-label-${item.name}`;
 
           return (
             <ListItem
-              key={item._id}
+              key={index}
               secondaryAction={
                 <IconButton
                   aria-label='delete'
@@ -117,9 +116,9 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ "aria-labelledby": labelId }}
-                    defaultChecked
+                    checked={item.checked}
                     color='success'
-                    onClick={handleCheckItem(item)}
+                    //onClick={() => handleCheckItem(item)}
                   />
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={`${item.name}`} />
@@ -127,25 +126,24 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
             </ListItem>
           );
         })}
-        <Input
-          startDecorator={<LuggageIcon />}
-          size='sm'
-          placeholder='Lets pack…'
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          endDecorator={
-            <Button
-              size='small'
-              value='soft'
-              onClick={handleCreateItem}
-              className={styles.addButton}
-              // variant='contained'
-              color='success'
-            >
-              Add Item
-            </Button>
-          }
-        />
+
+        <div className={styles.packingInput}>
+          {<LuggageIcon />}
+          <Input
+            placeholder='Lets pack…'
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <Button
+            size='small'
+            value='soft'
+            className={styles.addButton}
+            onClick={handleCreateItem}
+            color='success'
+          >
+            Add Item
+          </Button>
+        </div>
       </List>
     </Grid>
   );
