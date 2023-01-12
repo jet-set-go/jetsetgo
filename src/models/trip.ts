@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import { TItem } from "../../client/components/packinglist/api/getItems";
 
 export interface ITrip {
   name: string;
@@ -10,10 +11,7 @@ export interface ITrip {
     };
     place_id: string;
   };
-  packingList: {
-    name: string;
-    checked: boolean;
-  }[];
+  packingList: TItem[];
   startDate: Date;
   endDate: Date;
 }
@@ -40,6 +38,6 @@ export const tripSchema = new mongoose.Schema<ITrip>({
 
 const Trip =
   (mongoose.models.Trip as mongoose.Model<ITrip>) ||
-  mongoose.model('Trip', tripSchema);
+  mongoose.model("Trip", tripSchema);
 
 export default Trip;

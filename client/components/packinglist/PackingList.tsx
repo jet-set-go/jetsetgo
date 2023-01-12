@@ -21,25 +21,28 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useParams } from "react-router-dom";
+import { ITrip } from "../../../src/models/trip";
+import { ObjectId } from "mongoose";
 
-const PackingList = () => {
+interface PackingListProps {
+  trip: ITrip & { _id: ObjectId };
+}
+
+const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   //set input state
   const [input, setInput] = useState("");
   //set list state
-  //change to item
-  const [items, setItem] = useState<TItem[]>([]);
+  const [items, setItems] = useState<TItem[]>([]);
   //check off
-  const [checked, setChecked] = React.useState([0]);
+  // const [checked, setChecked] = React.useState([0]);
 
-  //get the current trip id
-  const { tripId } = useParams();
-  //when adding a new item
   async function handleCreateItem(e: React.FormEvent) {
     e.preventDefault();
     //declare const list and assign the awaited result of response.json
-    const item = await createItem(input);
+    const item = await createItem(input, trip._id.toString());
     //append  to the list state from backend
-    setItem([...items, item]);
+    setItems([...items, item]);
+
     //clear out input when done
     setInput("");
   }
@@ -50,37 +53,24 @@ const PackingList = () => {
     //declare const list and assign the awaited result of response.json
     newItemList[index].checked = true;
     //append  to the list state from backend
-    setItem(newItemList);
+    setItems(newItemList);
   }
 
   //function for delete item button
-  async function handleDelete(packingListId: string) {
-    await deleteItem(packingListId);
-    //set new state to the list filtered
-    setItem(items.filter((item) => item._id !== packingListId));
-  }
+  // async function handleDelete(input, trip._id.toString()) {
+  //   await deleteItem(packingListId);
+  //   //set new state to the list filtered
+  //   setItems(items.filter((item) => item._id !== packingListId));
+  // }
 
-  //will rerun every time trip changes
+  //will grab the items associated with the trip and update everytime it changes
   useEffect(() => {
-    if (tripId) return;
     async function fetchItems() {
-      console.log(tripId);
-      const newItem = await getItems(tripId);
-      setItem(newItem);
+      const newItems = await getItems(trip._id.toString());
+      setItems(newItems);
     }
     fetchItems();
   }, []);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http:localhost:3000/:id/tripdetails/packingList")
-  //     .then((res) => {
-  //       setItem(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error when useEffect list");
-  //     });
-  // }, []);
 
   //form is for the bottom of the packing list to add another item
   return (
@@ -100,7 +90,7 @@ const PackingList = () => {
         }}
       >
         {items.map((item) => {
-          const labelId = `checkbox-list-label-${item}`;
+          const labelId = `checkbox-list-label-${item.name}`;
 
           return (
             <ListItem
@@ -109,7 +99,7 @@ const PackingList = () => {
                 <IconButton
                   aria-label='delete'
                   size='small'
-                  onClick={() => handleDelete(item._id)}
+                  // onClick={() => handleDelete(item._id)}
                 >
                   <DeleteIcon fontSize='small' />
                 </IconButton>
@@ -129,15 +119,14 @@ const PackingList = () => {
                     inputProps={{ "aria-labelledby": labelId }}
                     defaultChecked
                     color='success'
-                    // onClick={handleCheckItem(item._id)}
+                    onClick={handleCheckItem(item)}
                   />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={`${item}`} />
+                <ListItemText id={labelId} primary={`${item.name}`} />
               </ListItemButton>
             </ListItem>
           );
         })}
-
         <Input
           startDecorator={<LuggageIcon />}
           size='sm'
@@ -161,5 +150,25 @@ const PackingList = () => {
     </Grid>
   );
 };
+
+const testPack = [
+  {
+    name: "Shorts",
+    checked: false,
+    _id: "1101",
+  },
+  {
+    name: "Shirts",
+    checked: false,
+    _id: "1102",
+  },
+  {
+    name: "Pants",
+    checked: false,
+    _id: "1103",
+  },
+];
+
+// const testPack = [{ name: "Shorts" }, { name: "Shirts" }, { name: "Pants" }];
 
 export default PackingList;
