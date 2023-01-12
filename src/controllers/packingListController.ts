@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 import { Request, Response, NextFunction } from "express";
 
-import Trip from "./tripsController";
+import Trip from "../models/trips";
 
 export const getPackingList = async (
   req: Request,
