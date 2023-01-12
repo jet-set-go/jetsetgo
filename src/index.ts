@@ -38,7 +38,7 @@ function isLoggedIn(req: Request, res: Response, next: NextFunction){
   req.user ? next() : res.sendStatus(401);
 }
 //Login path
-app.get('/login/google',
+app.get('/auth/google',
   passport.authenticate('google', { scope:
       [ 'email', 'profile' ] }
 ));

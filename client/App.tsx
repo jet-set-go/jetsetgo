@@ -3,7 +3,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CreateTrip from './routes/CreateTrip';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
-import Login from './auth/Login';
+import SignIn from './auth/SignIn';
+import SignUp from './auth/SignUp';
 import Root from './routes/Root';
 import TripDashboard, { loader as tripLoader } from './routes/TripDashboard';
 import WeatherSummary from './components/Weather/Weather'
@@ -43,8 +44,13 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/login',
-    element: <Login />,
+    path: '/signin',
+    element: <SignIn />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
     errorElement: <ErrorPage />
   },
 ])
