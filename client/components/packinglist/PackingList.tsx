@@ -47,29 +47,25 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   }
 
   //for todo list...trying to get it to save to DB
-  // async function handleCheckItem(index: number) {
-  //   const newItemList = [...items];
-  //   //declare const list and assign the awaited result of response.json
-  //   newItemList[index].checked = true;
-  //   //append  to the list state from backend
-  //   setItems(newItemList);
-  // }
+  async function handleCheckItem(item) {
+    const newItems = await checkItem(trip._id.toString(), item.toString());
+    setItems(newItems);
+  }
 
-  //function for delete item button
-  // async function handleDelete(input, trip._id.toString()) {
-  //   await deleteItem(packingListId);
-  //   //set new state to the list filtered
-  //   setItems(items.filter((item) => item._id !== packingListId));
-  // }
+  async function handleDelete(item) {
+    console.log("item", item);
+    const newItems = await deleteItem(trip._id.toString(), item.toString());
+    setItems(newItems);
+  }
 
   //will grab the items associated with the trip and update everytime it changes
-  // useEffect(() => {
-  //   async function fetchItems() {
-  //     const newItems = await getItems(trip._id.toString());
-  //     setItems(newItems);
-  //   }
-  //   fetchItems();
-  // }, []);
+  useEffect(() => {
+    async function fetchItems() {
+      const newItems = await getItems(trip._id.toString());
+      setItems(newItems);
+    }
+    fetchItems();
+  }, []);
 
   //form is for the bottom of the packing list to add another item
   return (
@@ -98,7 +94,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                 <IconButton
                   aria-label='delete'
                   size='small'
-                  // onClick={() => handleDelete(item._id)}
+                  onClick={() => handleDelete(item._id)}
                 >
                   <DeleteIcon fontSize='small' />
                 </IconButton>
@@ -118,7 +114,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                     inputProps={{ "aria-labelledby": labelId }}
                     checked={item.checked}
                     color='success'
-                    //onClick={() => handleCheckItem(item)}
+                    onClick={() => handleCheckItem(item._id)}
                   />
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={`${item.name}`} />
@@ -148,24 +144,6 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
     </Grid>
   );
 };
-
-const testPack = [
-  {
-    name: "Shorts",
-    checked: false,
-    _id: "1101",
-  },
-  {
-    name: "Shirts",
-    checked: false,
-    _id: "1102",
-  },
-  {
-    name: "Pants",
-    checked: false,
-    _id: "1103",
-  },
-];
 
 // const testPack = [{ name: "Shorts" }, { name: "Shirts" }, { name: "Pants" }];
 

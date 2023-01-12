@@ -56,7 +56,11 @@ export const checkOff = async (
     const itemIdx = packingList.findIndex(
       (item: TItem & { _id: ObjectId }) => item._id.toString() === itemId
     );
-    packingList[itemIdx].checked = true;
+    if (packingList[itemIdx].checked === true) {
+      packingList[itemIdx].checked = false;
+    } else {
+      packingList[itemIdx].checked = true;
+    }
     trip.save();
     res.locals.packingList = trip.packingList;
     next();
@@ -65,21 +69,28 @@ export const checkOff = async (
   }
 };
 
-// export const deleteItem = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const { itemId } = req.params;
+export const deleteItem = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { itemId } = req.params;
 
-//   try {
-//     //get current packing List
-//     const trip = res.locals.trip;
-//     const deck = await trip.findByIdAndDelete(itemId);
-//     console.log("deck", deck);
-//     res.json(deck);
-//     next();
-//   } catch (e) {
-//     return next(e);
-//   }
-// };
+  try {
+    //get current trip
+    const trip = res.locals.trip;
+    //get the right packingList
+    console.log(itemId);
+
+    const packingList = trip.packingList.filter(
+      (item: TItem) => item._id.toString() !== itemId
+    );
+
+    trip.packingList = packingList;
+    trip.save();
+
+    next();
+  } catch (e) {
+    return next(e);
+  }
+};
