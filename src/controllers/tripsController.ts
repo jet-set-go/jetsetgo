@@ -44,7 +44,7 @@ export const getTrip = async (
 ) => {
   const { id } = req.params;
   try {
-    const trip = await Trip.findById(id).select('-__v').exec();
+    const trip = await Trip.findById(id);
     if (trip === null) throw new Error('cannot get trip id');
     res.locals.trip = trip;
 

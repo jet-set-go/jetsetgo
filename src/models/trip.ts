@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { TItem } from '../../client/components/packinglist/api/getItems';
-
 export interface ITrip {
   name: string;
   id: string;
@@ -42,10 +41,6 @@ export const tripSchema = new mongoose.Schema<ITrip>(
     toJSON: { virtuals: true },
   }
 );
-
-tripSchema.virtual('id').get(function () {
-  return this._id.toString();
-});
 
 const Trip =
   (mongoose.models.Trip as mongoose.Model<ITrip>) ||
