@@ -11,7 +11,7 @@ import path from 'path';
 import './controllers/googleAuth';
 import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
-import { authenticateUser } from './controllers/authController';
+import { authenticateUser, getUser } from './controllers/authController';
 
 dotenv.config();
 
@@ -39,6 +39,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.json());
+
+app.use(getUser);
 
 app.get('/', authenticateUser, (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../public/index.html'));

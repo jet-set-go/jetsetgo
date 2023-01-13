@@ -29,7 +29,7 @@ export const createTrip = async (
 
     const trip = {
       name,
-
+      
       destination: {
         name: placeData.name,
         place_id: placeData.place_id,

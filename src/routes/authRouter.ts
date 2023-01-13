@@ -3,6 +3,7 @@ import passport from 'passport';
 import {
   authenticateUser,
   loginWithEmailAndPw,
+  registerWithEmailAndPw,
   // oauthCreateUserOrUpdateSessionIfExists,
 } from '../controllers/authController';
 
@@ -54,13 +55,22 @@ router.get('/signout', (req: Request, res: Response) => {
 
 //manual login routes
 
+router.post(
+  '/register',
+  registerWithEmailAndPw,
+  loginWithEmailAndPw,
+  (req: Request, res: Response) => {
+    res.status(200).json(res.locals.user);
+  }
+);
+
 router.post('/login', loginWithEmailAndPw, (req: Request, res: Response) => {
-  res.send(200).json(res.locals.user);
+  res.status(200).json(res.locals.user);
 });
 
 router.get('/user', authenticateUser, (req: Request, res: Response) => {
   console.log('Verified user: ', req.user);
-  return res.send(200).json(req.user);
+  return res.status(200).json(req.user);
 });
 
 export default router;

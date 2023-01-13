@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 export interface IUser {
-  userId: string;
+  id: string;
   email: string;
   session: string;
   sso: boolean;
@@ -14,18 +14,23 @@ export interface IUser {
   photos: { value: string }[];
 }
 
-const userSchema = new Schema<IUser>({
-  userId: { type: String, unique: true, required: true },
-  email: { type: String, required: true, unique: true },
-  session: { type: String },
-  sso: { type: Boolean },
-  firstName: { type: String },
-  lastName: { type: String },
-  username: { type: String, unique: true },
-  password: { type: String },
-  displayName: { type: String },
-  photos: [{ value: String }],
-});
+const userSchema = new Schema<IUser>(
+  {
+    email: { type: String, required: true, unique: true },
+    session: { type: String },
+    sso: { type: Boolean },
+    firstName: { type: String },
+    lastName: { type: String },
+    username: { type: String, unique: true },
+    password: { type: String },
+    displayName: { type: String },
+    photos: [{ value: String }],
+  },
+  {
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
+  }
+);
 
 const User =
   (mongoose.models.User as mongoose.Model<IUser>) ||
