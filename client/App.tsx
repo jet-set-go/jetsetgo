@@ -11,6 +11,7 @@ import TripDashboard, { loader as tripLoader } from './routes/TripDashboard';
 const router = createBrowserRouter([
   {
     path: '/',
+    // loader: rootLoader,
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [

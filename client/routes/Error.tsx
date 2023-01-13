@@ -1,21 +1,28 @@
 import React from 'react';
-import { useRouteError } from 'react-router-dom';
-interface RouteError {
-  statusText?: string;
-  message?: string;
+import { useNavigate, useRouteError } from 'react-router-dom';
+import { AuthorizationStatus } from './Root';
+
+interface ErrorResponse {
+  data: AuthorizationStatus;
 }
 
 const ErrorPage: React.FC = () => {
-  const error: RouteError = useRouteError() as RouteError;
-  console.error(error);
+  const { data: error } = useRouteError() as ErrorResponse;
+  console.error('Error in navigating to desired route: ', error);
+  // const navigate = useNavigate();
+
+  // React.useEffect(() => {
+  //   if (error.status === 401) {
+  //     console.log('Redirecting...');
+  //     navigate('/signin', { replace: true });
+  //   }
+  // }, [error, navigate]);
 
   return (
     <div id="error-page">
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
+      <p>{error && <i>{error.statusText || error.status}</i>}</p>
     </div>
   );
 };
