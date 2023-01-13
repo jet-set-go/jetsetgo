@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import { useLoaderData } from "react-router-dom";
-import PackingList from "../components/packinglist/PackingList";
+import PackingList from "../components/PackingList/PackingList";
 
 const TripPage = () => {
   return (

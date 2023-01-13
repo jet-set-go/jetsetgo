@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 
 import {
   createItem,
-  //deleteItem,
+  deleteItem,
   getPackingList,
   checkOff,
 } from "../controllers/packingListController";
@@ -24,8 +24,9 @@ router.patch("/:id/:itemId", getTrip, checkOff, (req, res) =>
   res.status(200).json(res.locals.packingList)
 );
 
-// router.delete("/:id/:itemId", getTrip, deleteItem, (req, res) =>
-//   res.status(200).json({ message: "recipe removed" })
-// );
+router.delete("/:id/:itemId", getTrip, deleteItem, (req, res) =>
+  //return the deleted Item
+  res.status(200).json(res.locals.packingList)
+);
 
 export default router;
