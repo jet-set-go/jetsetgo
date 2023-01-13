@@ -12,7 +12,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, Input, TextField } from "@mui/material";
+import {
+  Card,
+  IconButton,
+  Input,
+  TextField,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 // import Input from "@mui/joy/Input";
 import LuggageIcon from "@mui/icons-material/Luggage";
 import Grid from "@mui/material/Grid";
@@ -30,6 +37,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   const [input, setInput] = useState("");
   //set list state
   const [items, setItems] = useState<TItem[]>(trip.packingList);
+
   //check off
   // const [checked, setChecked] = React.useState([0]);
 
@@ -81,79 +89,86 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
 
   //form is for the bottom of the packing list to add another item
   return (
-    <Grid item xs={12} md={6}>
-      <Typography sx={{ mt: 4, mb: 2 }} variant='h6' component='div'>
-        Packing List:
-      </Typography>
-
-      <List
-        sx={{
-          width: "25%",
-          maxWidth: 360,
-          height: "40%",
-          maxHeight: 400,
-          position: "fixed",
-          scrollBehavior: "inherit",
-        }}
-      >
-        {items.map((item, index) => {
-          const labelId = `checkbox-list-label-${item.name}`;
-
-          return (
-            <ListItem
-              key={index}
-              secondaryAction={
-                <IconButton
-                  aria-label='delete'
-                  size='small'
-                  onClick={() => handleDelete(item._id)}
+    <Card sx={{ width: "70%" }}>
+      <CardMedia
+        sx={{ height: 40 }}
+        image='https://cdn.packhacker.com/2022/06/d78f3bdf-vpl-flatlay.jpg?auto=compress&auto=format&w=1050&h=700&fit=crop'
+      ></CardMedia>
+      <Grid item xs={3} md={4}>
+        <Typography sx={{ mt: 4, mb: 2 }} variant='h25'>
+          Packing List:
+        </Typography>
+        <List
+          sx={{
+            width: "25%",
+            maxWidth: 360,
+            height: "40%",
+            maxHeight: 400,
+            position: "fixed",
+            scrollBehavior: "inherit",
+          }}
+        >
+          {items.map((item, index) => {
+            const labelId = `checkbox-list-label-${item.name}`;
+            return (
+              <CardContent sx={{ width: "100%" }}>
+                <ListItem
+                  key={index}
+                  secondaryAction={
+                    <IconButton
+                      aria-label='delete'
+                      size='small'
+                      onClick={() => handleDelete(item._id)}
+                    >
+                      <DeleteIcon fontSize='small' />
+                    </IconButton>
+                  }
+                  disablePadding
                 >
-                  <DeleteIcon fontSize='small' />
-                </IconButton>
-              }
-              disablePadding
-            >
-              <ListItemButton
-                role={undefined}
-                // onClick={handleToggle(item)}
-                dense
+                  <ListItemButton
+                    role={undefined}
+                    // onClick={handleToggle(item)}
+                    dense
+                  >
+                    <ListItemIcon>
+                      <Checkbox
+                        edge='start'
+                        tabIndex={-1}
+                        disableRipple
+                        inputProps={{ "aria-labelledby": labelId }}
+                        checked={item.checked}
+                        color='success'
+                        onClick={() => handleCheckItem(item._id)}
+                      />
+                    </ListItemIcon>
+                    <ListItemText id={labelId} primary={`${item.name}`} />
+                  </ListItemButton>
+                </ListItem>
+              </CardContent>
+            );
+          })}
+          <CardContent sx={{ height: "100%" }}>
+            <div className={styles.packingInput}>
+              {<LuggageIcon />}
+              <Input
+                placeholder='Lets pack…'
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+              <Button
+                size='small'
+                value='soft'
+                className={styles.addButton}
+                onClick={handleCreateItem}
+                color='success'
               >
-                <ListItemIcon>
-                  <Checkbox
-                    edge='start'
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ "aria-labelledby": labelId }}
-                    checked={item.checked}
-                    color='success'
-                    onClick={() => handleCheckItem(item._id)}
-                  />
-                </ListItemIcon>
-                <ListItemText id={labelId} primary={`${item.name}`} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-
-        <div className={styles.packingInput}>
-          {<LuggageIcon />}
-          <Input
-            placeholder='Lets pack…'
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <Button
-            size='small'
-            value='soft'
-            className={styles.addButton}
-            onClick={handleCreateItem}
-            color='success'
-          >
-            Add Item
-          </Button>
-        </div>
-      </List>
-    </Grid>
+                Add Item
+              </Button>
+            </div>
+          </CardContent>
+        </List>
+      </Grid>
+    </Card>
   );
 };
 

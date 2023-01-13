@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 import { ITrip } from "../../src/models/trip";
-import PackingList from "../components/packinglist/PackingList";
+import PackingList from "../components/PackingList/PackingList";
 import TripSummary from "../components/TripSummary/TripSummary";
 import WeatherSummary from "../components/Weather/Weather";
 export const loader = async ({ params }: { params: any }) => {

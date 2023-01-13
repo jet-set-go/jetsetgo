@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 import { ConstructionOutlined } from "@mui/icons-material";
 import { Request, Response, NextFunction } from "express";
 import { ObjectId } from "mongoose";
-import { TItem } from "../../client/components/packinglist/api/getItems";
+import { TItem } from "../../client/components/PackingList/api/getItems";
 import Trip, { ITrip } from "../models/trip";
 
 export const getPackingList = async (
