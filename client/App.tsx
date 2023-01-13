@@ -4,7 +4,7 @@ import CreateTrip from './routes/CreateTrip';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
 import SignIn from './auth/SignIn';
-import SignUp from './auth/SignUp';
+import SignUp from './auth/Signup';
 import Root from './routes/Root';
 import TripDashboard, { loader as tripLoader } from './routes/TripDashboard';
 import WeatherSummary from './components/Weather/Weather';
