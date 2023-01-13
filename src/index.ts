@@ -1,5 +1,5 @@
-import placesRouter from './routes/places';
-import tripsRouter from './routes/trips';
+import placesRouter from './routes/placesRouter';
+import tripsRouter from './routes/tripsRouter';
 import weatherRouter from './routes/weather';
 import packingListRouter from './routes/packingList';
 import authRouter from './routes/authRouter';

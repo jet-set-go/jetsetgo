@@ -1,4 +1,4 @@
-import { getPlaceDetails } from './../controllers/placesController';
+import { getPlaceDetails } from '../controllers/placesController';
 import { Request, Response, Router } from 'express';
 import {
   createTrip,
@@ -10,6 +10,7 @@ import { authenticateUser } from '../controllers/authController';
 
 const router = Router();
 
+// Get a complete list of trips for the current user
 router.get(
   '/',
   authenticateUser,
@@ -19,6 +20,7 @@ router.get(
   }
 );
 
+// Create a new trip
 router.post(
   '/',
   authenticateUser,
@@ -30,10 +32,12 @@ router.post(
   }
 );
 
+// Get a single trip by id
 router.get('/:id', authenticateUser, getTrip, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.trip);
 });
 
+// Delete a trip by id
 router.delete(
   '/:id',
   authenticateUser,

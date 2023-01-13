@@ -22,8 +22,18 @@ import DrawerHeader from './DrawerHeader';
 const drawerWidth = 240;
 
 export interface DrawerItem {
+  /**
+   * The text to display in the drawer item.
+   */
   text: string;
+  /**
+   * The icon to display in the drawer item.
+   */
   icon: React.ReactElement;
+  /**
+   * A callback function to be called when the drawer item is clicked.
+   * @param event 
+   */
   onClick: (event: React.MouseEvent<HTMLLIElement>) => void;
 }
 

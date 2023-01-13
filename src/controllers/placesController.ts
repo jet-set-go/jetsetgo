@@ -6,14 +6,21 @@ import {
 
 const client = new Client({});
 
+/**
+ * Returns of list of the ten most likely destinations based on the current input string. Expects an input parameter in the request query, which is the current input string. The list of autocomplete predictions will be attached to the response object as res.locals.places.
+ * @param req
+ * @param res
+ * @param next
+ * @returns
+ */
 export const getPlacesAutocomplete = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const input = req.query.input as string;
-
   try {
+    const input = req.query.input as string;
+    if (!input) throw new Error('Must provide input in request query.');
     const { data } = await client.placeAutocomplete({
       params: {
         input,
@@ -38,14 +45,22 @@ export const getPlacesAutocomplete = async (
   }
 };
 
+/**
+ * A middleware function that fetches place information from the Google Places API. Expects a place_id parameter in the request body. The place information will be attached to the response object as res.locals.place.
+ * @param req
+ * @param res
+ * @param next
+ * @returns
+ */
 export const getPlaceDetails = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { place_id } = req.body;
-
   try {
+    const { place_id } = req.body;
+    if (!place_id) throw new Error('Must provide place_id in request body.');
+
     const { data } = await client.placeDetails({
       params: {
         place_id,
@@ -53,7 +68,6 @@ export const getPlaceDetails = async (
       },
     });
 
-    console.log('placeData', data);
     res.locals.place = data.result;
     return next();
   } catch (error) {

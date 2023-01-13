@@ -9,18 +9,44 @@ import {
 import React from 'react';
 
 export interface PromptAction {
+  /**
+   * The label of the action button.
+   */
   label: string;
+  /**
+   * A callback function that is invoked when the action button is clicked.
+   * @param event 
+   * @returns 
+   */
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface ActionPromptProps {
+  /**
+   * A boolean indicating whether the prompt should be displayed
+   */
   open: boolean;
+  /**
+   * A callback function that is invoked when the prompt is closed by the user
+   */
   onClose: () => void;
+  /**
+   * The title of the prompt
+   */
   title: string;
+  /**
+   * The text content of the prompt
+   */
   content: string;
+  /**
+   * An array of actions that the user can take. Each action will be displayed as a button and must consist of a label and onClick callback function.
+   */
   actions: PromptAction[];
 }
 
+/**
+ * A MUI-styled prompt that displays a title, content, and a set of actions that the user can take.
+ */
 const ActionPrompt: React.FC<ActionPromptProps> = ({
   open,
   onClose,
