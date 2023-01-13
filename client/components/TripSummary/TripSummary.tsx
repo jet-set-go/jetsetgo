@@ -15,6 +15,26 @@ interface TripSummaryProps {
 }
 
 const TripSummary: React.FC<TripSummaryProps> = ({ trip }) => {
+  // const [currentImage, setCurrentImage] = React.useState(0);
+
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentImage((currentImage + 1) % trip.destination.images.length);
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, [currentImage, trip.destination.images.length]);
+
+  // const imageSlideshow = trip.destination.images.map((image, index) => {
+  //   const opacity = index === currentImage ? 1 : 0;
+  //   return (
+  //     <CardMedia
+  //       key={image}
+  //       sx={{ height: 240, opacity, transition: 'opacity 1s' }}
+  //       title={trip.name}
+  //       image={image}
+  //     />);
+  // });
+
   return (
     <Card sx={{ width: '100%' }}>
       <CardMedia
