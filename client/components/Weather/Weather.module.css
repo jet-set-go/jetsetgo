@@ -10,7 +10,7 @@ html {
 }
 .container {
   /* layout:   */
-  overflow:hidden;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -26,7 +26,8 @@ html {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   color: white;
-  text-shadow: -1px 1px 4px #000, 1px 1px 4px #000, 1px -1px 0 #000, -1px -1px 0 #000;
+  text-shadow: -1px 1px 4px #000, 1px 1px 4px #000, 1px -1px 0 #000,
+    -1px -1px 0 #000;
   box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.75);
   font-weight: bold;
   border-radius: 15px 15px 15px 15px;
@@ -34,12 +35,12 @@ html {
 /* .imgContainer { */
 /*   width: 100%; */
 /*   height:100%; */
-/*   /* z-index:-1; */ 
+/*   /* z-index:-1; */
 /* } */
 img {
-  object-fit:cover;
+  object-fit: cover;
   width: 100%;
-  height:100%;
+  height: 100%;
   position: absolute;
   position: absolute;
   top: 0;
@@ -50,7 +51,7 @@ img {
 
 .containerLeft {
   /* layout:   */
-  z-index:2;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -74,7 +75,7 @@ img {
 }
 .containerRight {
   /* layout: */
-  z-index:2;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
