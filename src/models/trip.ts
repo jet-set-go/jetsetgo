@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
-import { TItem } from "../../client/components/packinglist/api/getItems";
-
+import mongoose from 'mongoose';
+import { TItem } from '../../client/components/packinglist/api/getItems';
 export interface ITrip {
   name: string;
   id: string;
@@ -17,28 +16,34 @@ export interface ITrip {
   endDate: Date;
 }
 
-export const tripSchema = new mongoose.Schema<ITrip>({
-  name: { type: String, required: true },
-  destination: {
+export const tripSchema = new mongoose.Schema<ITrip>(
+  {
     name: { type: String, required: true },
-    location: {
-      lat: { type: Number, required: true },
-      lng: { type: Number, required: true },
-    },
-    place_id: { type: String, required: true },
-  },
-  packingList: [
-    {
+    destination: {
       name: { type: String, required: true },
-      checked: { type: Boolean, required: true },
+      location: {
+        lat: { type: Number, required: true },
+        lng: { type: Number, required: true },
+      },
+      place_id: { type: String, required: true },
     },
-  ],
-  startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true },
-});
+    packingList: [
+      {
+        name: { type: String, required: true },
+        checked: { type: Boolean, required: true },
+      },
+    ],
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+  },
+  {
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
+  }
+);
 
 const Trip =
   (mongoose.models.Trip as mongoose.Model<ITrip>) ||
-  mongoose.model("Trip", tripSchema);
+  mongoose.model('Trip', tripSchema);
 
 export default Trip;

@@ -16,7 +16,7 @@ interface TripSummaryProps {
 
 const TripSummary: React.FC<TripSummaryProps> = ({ trip }) => {
   return (
-    <Card sx={{ width: 480 }}>
+    <Card sx={{ width: '100%' }}>
       <CardMedia
         sx={{ height: 240 }}
         title={trip.name}
