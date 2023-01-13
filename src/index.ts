@@ -1,7 +1,8 @@
 import placesRouter from './routes/places';
 import tripsRouter from './routes/trips';
 import weatherRouter from './routes/weather'
-import packingListRouter from './routes/packingList'
+import packingListRouter from './routes/packingList';
+import authRouter from './routes/authRouter';
 import dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
@@ -25,37 +26,15 @@ mongoose
 
 const app = express();
 
-app.use(session({secret: 'flyyyy JetSetGo'}));
+//session and passport initialization
+app.use(session({secret: 'sessionJetSetGo'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../public')));
 
-
-//session middleware
-function isLoggedIn(req: Request, res: Response, next: NextFunction){
-  req.user ? next() : res.sendStatus(401);
-}
-//Login path
-app.get('/auth/google',
-  passport.authenticate('google', { scope:
-      [ 'email', 'profile' ] }
-));
-
-app.get( '/google/callback',
-    passport.authenticate( 'google', {
-        successRedirect: '/protected',
-        failureRedirect: '/auth/google/failure'
-}));
-
-app.get ('/protected', isLoggedIn, (req: Request, res: Response) => {
-  res.send('Hello, you are logged in!')
-})
-app.get ('/auth/google/failure', (req: Request, res: Response) => {
-  res.send('Failure');
-})
-
+app.use('/auth', authRouter);
 app.use('/api/places', placesRouter);
 app.use('/api/trips', tripsRouter);
 app.use('/api/packingList', packingListRouter)
