@@ -1,6 +1,6 @@
 import { Email } from '@mui/icons-material';
 import { NextFunction, Request, Response } from 'express';
-import User from '../models/userModel';
+import User, { IUser } from '../models/userModel';
 
 export const loginWithEmailAndPw = async (
   req: Request,
@@ -20,6 +20,7 @@ export const oauthCreateUserOrUpdateSessionIfExists =  (
   next: NextFunction
 ) => {
   // const user: User = req.user! as User;
+  //@ts-ignore
   const { email, id, given_name, family_name, photos, displayName } = req.user;
   User.findOneAndUpdate({ email },
     { session: req.session.id },
@@ -58,7 +59,7 @@ export const getUserBySession = async (
   res: Response,
   next: NextFunction
 ) => {
-  await User.findOne({session: req.session.id}, (err: any, user: object) => {
+  await User.findOne({session: req.session.id}, (err: any, user: IUser) => {
     if(err) return next(err);
     if(!user) res.redirect('/error');
     res.locals.user = user;

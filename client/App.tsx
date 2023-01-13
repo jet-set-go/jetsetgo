@@ -7,8 +7,6 @@ import SignIn from './auth/SignIn';
 import SignUp from './auth/Signup';
 import Root from './routes/Root';
 import TripDashboard, { loader as tripLoader } from './routes/TripDashboard';
-import WeatherSummary from './components/Weather/Weather';
-import TripPage from './routes/TripPage';
 
 const router = createBrowserRouter([
   {

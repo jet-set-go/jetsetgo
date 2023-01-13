@@ -6,23 +6,24 @@ import {
   getAllTrips,
   getTrip,
 } from '../controllers/tripsController';
+import { getUserBySession } from '../controllers/authController';
 
 const router = Router();
 
-router.get('/', getAllTrips, (req: Request, res: Response) => {
+router.get('/', getUserBySession, getAllTrips, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.trips);
 });
 
-router.post('/', getPlaceDetails, createTrip, (req: Request, res: Response) => {
+router.post('/', getUserBySession, getPlaceDetails, createTrip, (req: Request, res: Response) => {
   console.log('Created trip: ', res.locals.trip);
   return res.status(201).json(res.locals.trip);
 });
 
-router.get('/:id', getTrip, (req: Request, res: Response) => {
+router.get('/:id', getUserBySession, getTrip, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.trip);
 });
 
-router.delete('/:id', getTrip, deleteTrip, (req: Request, res: Response) => {
+router.delete('/:id', getUserBySession, getTrip, deleteTrip, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.trip);
 });
 

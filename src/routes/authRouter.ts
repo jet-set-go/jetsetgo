@@ -34,8 +34,8 @@ function isLoggedIn(req: Request, res: Response, next: NextFunction){
   })
 
   router.get('/signout', (req: Request, res: Response) => {
-    req.logout();
-    req.session.destroy();
+    req.logout((err: any) => {});
+    req.session.destroy((err: any) => {});
     res.send('Goodbye!')
   })
 
