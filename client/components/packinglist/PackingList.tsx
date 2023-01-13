@@ -23,6 +23,7 @@ import Button from "@mui/material/Button";
 import { Form, useParams } from "react-router-dom";
 import { ITrip } from "../../../src/models/trip";
 import { ObjectId } from "mongoose";
+import { ContactSupportOutlined } from "@mui/icons-material";
 
 interface PackingListProps {
   trip: ITrip & { _id: ObjectId };
@@ -39,23 +40,38 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   async function handleCreateItem(e: React.MouseEvent) {
     //declare const list and assign the awaited result of response.json
     const newItems = await createItem(input, trip._id.toString());
-    //append  to the list state from backend
-    setItems(newItems);
 
+    let checked = newItems.filter((item) => item.checked === true);
+    let notchecked = newItems.filter((item) => item.checked !== true);
+    let packing = notchecked.concat(checked);
+    //append  to the list state from backend
+    setItems(packing);
     //clear out input when done
     setInput("");
   }
 
   //for todo list...trying to get it to save to DB
-  async function handleCheckItem(item) {
+  async function handleCheckItem(item: TItem) {
     const newItems = await checkItem(trip._id.toString(), item.toString());
-    setItems(newItems);
+    let checked = newItems.filter((item) => item.checked === true);
+    let notchecked = newItems.filter((item) => item.checked !== true);
+    let packing2 = notchecked.concat(checked);
+    console.log("pack2", packing2);
+    setItems(packing2);
   }
+  //handleDelete gets the argument of the item._id
+  async function handleDelete(itemId: TItem) {
+    const remainingItems = await deleteItem(
+      trip._id.toString(),
+      itemId.toString()
+    );
+    let rest = remainingItems;
+    console.log("delete", rest);
+    let checked = remainingItems.filter((item) => item.checked === true);
+    let notchecked = remainingItems.filter((item) => item.checked !== true);
+    let updatedList = notchecked.concat(checked);
 
-  async function handleDelete(item) {
-    console.log("item", item);
-    const newItems = await deleteItem(trip._id.toString(), item.toString());
-    setItems(newItems);
+    setItems(updatedList);
   }
 
   //will grab the items associated with the trip and update everytime it changes

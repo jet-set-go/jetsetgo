@@ -25,7 +25,8 @@ router.patch("/:id/:itemId", getTrip, checkOff, (req, res) =>
 );
 
 router.delete("/:id/:itemId", getTrip, deleteItem, (req, res) =>
-  res.status(200).json({ message: "item removed" })
+  //return the deleted Item
+  res.status(200).json(res.locals.packingList)
 );
 
 export default router;

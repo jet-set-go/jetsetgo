@@ -5,8 +5,6 @@ export async function createItem(
   input: string,
   tripId: string
 ): Promise<TItem[]> {
-  console.log("input:", input);
-  console.log("tripId", tripId);
   const response = await fetch(`${API_URL}/${tripId}`, {
     method: "POST",
     headers: {

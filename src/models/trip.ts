@@ -3,6 +3,7 @@ import { TItem } from "../../client/components/packinglist/api/getItems";
 
 export interface ITrip {
   name: string;
+  id: string;
   destination: {
     name: string;
     location: {
