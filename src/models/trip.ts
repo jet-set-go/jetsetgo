@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { TItem } from '../../client/components/packinglist/api/getItems';
+import mongoose from "mongoose";
+import { TItem } from "../../client/components/PackingList/api/getItems";
 export interface ITrip {
   name: string;
   id: string;
@@ -44,6 +44,6 @@ export const tripSchema = new mongoose.Schema<ITrip>(
 
 const Trip =
   (mongoose.models.Trip as mongoose.Model<ITrip>) ||
-  mongoose.model('Trip', tripSchema);
+  mongoose.model("Trip", tripSchema);
 
 export default Trip;
