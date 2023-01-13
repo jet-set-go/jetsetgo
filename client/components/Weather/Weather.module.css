@@ -1,31 +1,30 @@
-
 /* layout: */
 /* styling: */
 
 html {
-/* layout: */
+  /* layout: */
   box-sizing: border-box;
-/* styling: */
+  /* styling: */
 }
 .container {
   /* layout:   */
   display: flex;
   justify-content: space-between;
 
-  width: 30%;
+  min-width: 60px;
   height: 60%;
   padding: 20px;
-/* styling: */
+  /* styling: */
   background-color: #2196f3;
   color: white;
   border-radius: 15px 15px 15px 15px;
 }
 .containerleft {
   /* layout:   */
-  display:flex;
-  flex-direction:column;
-  
-/* styling: */
+  display: flex;
+  flex-direction: column;
+
+  /* styling: */
 }
 .containerConditions {
   display: flex;
@@ -33,25 +32,24 @@ html {
 }
 .containerTemps {
   /* layout:   */
- display: flex; 
- justify-content: space-between;
-/* styling: */
+  display: flex;
+  justify-content: space-between;
+  /* styling: */
 }
 .currentTemp {
   font-size: 2rem;
 }
 .containerRight {
-/* layout: */
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-/* styling: */
+  /* layout: */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* styling: */
 }
 .location {
-/* layout: */
-  text-align:right;
-/* styling: */
-
+  /* layout: */
+  text-align: right;
+  /* styling: */
 }
 /* .scaleToggle {
 } */
