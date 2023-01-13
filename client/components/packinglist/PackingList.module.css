@@ -2,7 +2,7 @@
   /* display: flex; */
   position: fixed;
   border-style: solid;
-  background-color: blue;
+  border-radius: 15px 15px 15px 15px;
 }
 .packingInput {
   display: flex;

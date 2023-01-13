@@ -5,8 +5,6 @@ import { createItem } from "./api/createItem";
 import { checkItem } from "./api/checkItem";
 import { TItem } from "./api/getItems";
 import styles from "./PackingList.module.css";
-import axios from "axios";
-
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -20,10 +18,8 @@ import LuggageIcon from "@mui/icons-material/Luggage";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Form, useParams } from "react-router-dom";
 import { ITrip } from "../../../src/models/trip";
 import { ObjectId } from "mongoose";
-import { ContactSupportOutlined } from "@mui/icons-material";
 
 interface PackingListProps {
   trip: ITrip & { _id: ObjectId };
