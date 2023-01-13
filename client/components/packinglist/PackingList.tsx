@@ -27,10 +27,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { ITrip } from "../../../src/models/trip";
 import { ObjectId } from "mongoose";
+import { orange, amber } from "@mui/material/colors";
 
 interface PackingListProps {
   trip: ITrip & { _id: ObjectId };
 }
+
+const primary = orange["A400"];
+const accent = orange["A100"];
+const accent2 = amber[500];
 
 const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   //set input state
@@ -89,29 +94,37 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
 
   //form is for the bottom of the packing list to add another item
   return (
-    <Card sx={{ width: "70%" }}>
+    <Card sx={{ width: "64%" }}>
       <CardMedia
-        sx={{ height: 40 }}
+        sx={{ height: 70 }}
         image='https://cdn.packhacker.com/2022/06/d78f3bdf-vpl-flatlay.jpg?auto=compress&auto=format&w=1050&h=700&fit=crop'
+        //image='https://media.istockphoto.com/id/1417417189/vector/vector-set-with-suitcases-bags-and-backpacks-for-travel-different-types-of-hand-luggage.jpg?s=612x612&w=0&k=20&c=D5PAQYQsg18tus_uczB6kmZfNypP_P5OJNi-jalSB3Y='
       ></CardMedia>
       <Grid item xs={3} md={4}>
-        <Typography sx={{ mt: 4, mb: 2 }} variant='h25'>
+        <Typography sx={{ mt: 3, mb: 1 }} variant='subtitle1'>
           Packing List:
         </Typography>
+
         <List
           sx={{
             width: "25%",
-            maxWidth: 360,
+            maxWidth: "100%",
             height: "40%",
-            maxHeight: 400,
+            maxHeight: 100,
             position: "fixed",
             scrollBehavior: "inherit",
           }}
         >
-          {items.map((item, index) => {
-            const labelId = `checkbox-list-label-${item.name}`;
-            return (
-              <CardContent sx={{ width: "100%" }}>
+          <CardContent
+            sx={{
+              width: "100%",
+              bgcolor: primary,
+              borderRadius: 1,
+            }}
+          >
+            {items.map((item, index) => {
+              const labelId = `checkbox-list-label-${item.name}`;
+              return (
                 <ListItem
                   key={index}
                   secondaryAction={
@@ -137,17 +150,21 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                         disableRipple
                         inputProps={{ "aria-labelledby": labelId }}
                         checked={item.checked}
-                        color='success'
                         onClick={() => handleCheckItem(item._id)}
+                        sx={{
+                          color: accent[Symbol],
+                          "&.Mui-checked": {
+                            color: accent,
+                          },
+                        }}
                       />
                     </ListItemIcon>
                     <ListItemText id={labelId} primary={`${item.name}`} />
                   </ListItemButton>
                 </ListItem>
-              </CardContent>
-            );
-          })}
-          <CardContent sx={{ height: "100%" }}>
+              );
+            })}
+
             <div className={styles.packingInput}>
               {<LuggageIcon />}
               <Input
@@ -156,11 +173,15 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                 onChange={(e) => setInput(e.target.value)}
               />
               <Button
-                size='small'
                 value='soft'
+                size='small'
                 className={styles.addButton}
                 onClick={handleCreateItem}
-                color='success'
+                sx={{
+                  backgroundColor: accent2,
+                  "&:hover": { backgroundColor: accent },
+                }}
+                variant='contained'
               >
                 Add Item
               </Button>
