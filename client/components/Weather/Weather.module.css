@@ -1,57 +1,95 @@
-
 /* layout: */
 /* styling: */
 
+* {
+}
 html {
-/* layout: */
+  /* layout: */
   box-sizing: border-box;
-/* styling: */
+  /* styling: */
 }
 .container {
   /* layout:   */
+  overflow:hidden;
   display: flex;
   justify-content: space-between;
-
-  width: 30%;
-  height: 60%;
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-width: 400px;
+  max-width: 600px;
+  /* min-height: 60px; */
   padding: 20px;
-/* styling: */
+  /* styling: */
   background-color: #2196f3;
+  /* background-image: url(./images/clear-night-jetsetgo.jpg); */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   color: white;
+  text-shadow: -1px 1px 4px #000, 1px 1px 4px #000, 1px -1px 0 #000, -1px -1px 0 #000;
+  box-shadow: 0px 0px 14px 1px rgba(0, 0, 0, 0.75);
+  font-weight: bold;
   border-radius: 15px 15px 15px 15px;
 }
-.containerleft {
+/* .imgContainer { */
+/*   width: 100%; */
+/*   height:100%; */
+/*   /* z-index:-1; */ 
+/* } */
+img {
+  object-fit:cover;
+  width: 100%;
+  height:100%;
+  position: absolute;
+  position: absolute;
+  top: 0;
+  left: 0;
+  top: 0;
+  left: 0;
+}
+
+.containerLeft {
   /* layout:   */
-  display:flex;
-  flex-direction:column;
-  
-/* styling: */
+  z-index:2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* styling: */
 }
 .containerConditions {
   display: flex;
-  justify-content: space-around;
+  justify-content: left;
+  gap: 10px;
 }
 .containerTemps {
   /* layout:   */
- display: flex; 
- justify-content: space-between;
-/* styling: */
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  /* styling: */
 }
 .currentTemp {
-  font-size: 2rem;
+  font-size: 3rem;
 }
 .containerRight {
-/* layout: */
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-/* styling: */
+  /* layout: */
+  z-index:2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  /* styling: */
 }
 .location {
-/* layout: */
-  text-align:right;
-/* styling: */
-
+  /* layout: */
+  text-align: right;
+  /* styling: */
+}
+.time {
+  margin-top: 15px;
 }
 /* .scaleToggle {
 } */

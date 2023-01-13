@@ -10,20 +10,23 @@ import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
 interface Props {
   condition: string
 } 
-// 'Drizzle'
-// 'Rain'
-// 'Snow'
-// 'Mist'
-// 'Smoke'
-// 'Haze'
-// 'Dust'
-// 'Fog'
-// 'Sand'
-// 'Ash'
-// 'Squall'
-// 'Tornado'
-// 'Clear'
-// 'Clouds'
+export const opts = [ 
+  'Drizzle',
+'Rain',
+'Snow',
+'Mist',
+'Smoke',
+'Haze',
+'Dust',
+'Fog',
+'Sand',
+'Ash',
+'Squall',
+'Tornado',
+'Clear',
+'Clouds',
+
+ ]
 
 const icons = new Map() 
 icons.set('Thunderstorm', <ThunderstormIcon/>)
