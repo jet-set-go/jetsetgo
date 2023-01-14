@@ -110,9 +110,10 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
             width: "25%",
             maxWidth: "100%",
             height: "40%",
-            maxHeight: 100,
             position: "fixed",
             scrollBehavior: "inherit",
+            maxHeight: "100%",
+            overflow: "auto",
           }}
         >
           <CardContent
