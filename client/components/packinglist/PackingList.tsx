@@ -100,7 +100,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
 
   //form is for the bottom of the packing list to add another item
   return (
-    <Card sx={{ width: "64%" }}>
+    <Card sx={{ width: "64%", maxWidth: "100%", minWidth: "250px" }}>
       <CardMedia
         sx={{ height: 70 }}
         image='https://cdn.packhacker.com/2022/06/d78f3bdf-vpl-flatlay.jpg?auto=compress&auto=format&w=1050&h=700&fit=crop'
@@ -120,6 +120,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
             scrollBehavior: "inherit",
             maxHeight: "100%",
             overflow: "auto",
+            minWidth: "250px",
           }}
         >
           <CardContent
