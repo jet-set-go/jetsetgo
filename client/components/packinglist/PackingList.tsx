@@ -12,6 +12,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LuggageOutlinedIcon from "@mui/icons-material/LuggageOutlined";
 import {
   Card,
   IconButton,
@@ -27,16 +28,21 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { ITrip } from "../../../src/models/trip";
 import { ObjectId } from "mongoose";
-import { orange, amber } from "@mui/material/colors";
+import { orange, amber, cyan, lightBlue } from "@mui/material/colors";
 
 interface PackingListProps {
   trip: ITrip & { _id: ObjectId };
 }
 
+//oranges
 const primary = orange["A400"];
 const accent = orange["A100"];
 const accent2 = amber[500];
-
+//blues
+const primaryBlue = cyan["A400"];
+const accentBlue = cyan["A100"];
+const accent2Blue = cyan[500];
+const accent3Blue = cyan["A900"];
 const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   //set input state
   const [input, setInput] = useState("");
@@ -149,6 +155,8 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                         edge='start'
                         tabIndex={-1}
                         disableRipple
+                        icon={<LuggageOutlinedIcon />}
+                        checkedIcon={<LuggageIcon />}
                         inputProps={{ "aria-labelledby": labelId }}
                         checked={item.checked}
                         onClick={() => handleCheckItem(item._id)}
@@ -180,7 +188,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                 onClick={handleCreateItem}
                 sx={{
                   backgroundColor: accent2,
-                  "&:hover": { backgroundColor: accent },
+                  "&:hover": { backgroundColor: accentBlue },
                 }}
                 variant='contained'
               >
