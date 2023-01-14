@@ -1,7 +1,9 @@
 import { Autocomplete, Button, TextField, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { Form, useNavigate } from 'react-router-dom';
+import useFadeInOpacity from '../../hooks/useFadeInOpacity';
 import styles from './CreateTripForm.module.css';
+
 interface Place {
   name: string;
   place_id: string;
@@ -16,7 +18,7 @@ const CreateTripForm = () => {
     []
   );
 
-  const [backgroundOpacity, setBackgroundOpacity] = React.useState(0);
+  const fadeIn = useFadeInOpacity();
 
   const [tripName, setTripName] = React.useState('');
   const [startDate, setStartDate] = React.useState('');
@@ -33,7 +35,7 @@ const CreateTripForm = () => {
     };
   }, [destination]);
 
-  // Fetch data from API
+  // Fetch autocomplete data from API
   useEffect(() => {
     if (debounceDestination) {
       const fetchAutocomplete = async () => {
@@ -47,26 +49,20 @@ const CreateTripForm = () => {
     }
   }, [debounceDestination]);
 
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      setBackgroundOpacity(1);
-    }, 200);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, []);
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (!destination || !startDate || !endDate) {
       return;
     }
 
-    // Check if dates are valid and store as ISO string
+    // Check if dates are valid and stored as ISO string
     const startTimestamp = Date.parse(startDate);
     const endTimestamp = Date.parse(endDate);
 
     if (isNaN(startTimestamp) || isNaN(endTimestamp)) {
+      return;
+    }
+
+    if (startTimestamp > endTimestamp) {
       return;
     }
 
@@ -84,6 +80,7 @@ const CreateTripForm = () => {
 
     const name = tripName || destination;
 
+    // Create trip in database
     const response = await fetch('/api/trips', {
       method: 'POST',
       headers: {
@@ -97,19 +94,20 @@ const CreateTripForm = () => {
       }),
     });
 
+    // Redirect to trip page
     if (response.status === 201) {
       const data = await response.json();
-      navigate(`/trip/${data._id}`);
+      navigate(`/trip/${data.id}`);
     }
   };
 
   return (
     <div className={styles.container}>
       <img
-        src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80"
+        src="https://source.unsplash.com/collection/4378393"
         alt="beach"
         className={styles.background}
-        style={{ opacity: backgroundOpacity }}
+        style={fadeIn}
       />
       <Form onSubmit={handleSubmit}>
         <div className={styles.form}>
@@ -150,7 +148,6 @@ const CreateTripForm = () => {
             id="start-date"
             label="Trip Start"
             type="date"
-            // defaultValue="2023-01-19"
             sx={{ minWidth: 220 }}
             InputLabelProps={{
               shrink: true,
@@ -163,7 +160,6 @@ const CreateTripForm = () => {
             id="end-date"
             label="Trip End"
             type="date"
-            // defaultValue="2017-05-24"
             sx={{ minWidth: 220 }}
             InputLabelProps={{
               shrink: true,

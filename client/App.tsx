@@ -4,11 +4,11 @@ import CreateTrip from './routes/CreateTrip';
 import ErrorPage from './routes/Error';
 import HomePage from './routes/Home';
 import SignIn from './auth/SignIn';
-import SignUp from './auth/SignUp';
+import SignUp from './auth/Signup';
 import Root from './routes/Root';
 import TripDashboard, { loader as tripLoader } from './routes/TripDashboard';
-import WeatherSummary from './components/Weather/Weather';
-import TripPage from './routes/TripPage';
+import { createTheme } from '@mui/material';
+import { ThemeProvider } from '@mui/system';
 
 const router = createBrowserRouter([
   {
@@ -44,10 +44,24 @@ const router = createBrowserRouter([
   },
 ]);
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#F68C02',
+      contrastText: '#FFFFFF',
+    },
+    secondary: {
+      main: '#073064',
+    },
+  },
+});
+
 const App: React.FC = () => {
   return (
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </React.StrictMode>
   );
 };

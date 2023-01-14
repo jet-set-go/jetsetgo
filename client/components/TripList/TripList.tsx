@@ -18,7 +18,6 @@ import { ITrip } from '../../../src/models/trip';
 
 const TripList = () => {
   const [deletePrompt, setDeletePrompt] = React.useState<ITrip | null>(null);
-
   const [trips, setTrips] = React.useState<ITrip[]>([]);
 
   React.useEffect(() => {
@@ -81,7 +80,6 @@ const TripList = () => {
       <Box mt={2}>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {trips.map((trip) => (
-            // TODO: Link component should link to dashboard for specific trip once routing is fleshed out
             <div key={trip.id} className={styles.card}>
               <Link to={`/trip/${trip.id}`} className={styles.link}>
                 <ListItem key={trip.id}>

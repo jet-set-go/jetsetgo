@@ -1,0 +1,42 @@
+{
+  "cookie": {
+    "originalMaxAge": null,
+    "expires": null,
+    "httpOnly": true,
+    "path": "/"
+  },
+  "passport": {
+    "user": {
+      "provider": "google",
+      "sub": "102784215597793508888",
+      "id": "102784215597793508888",
+      "displayName": "Alexander Durham",
+      "name": { "givenName": "Alexander", "familyName": "Durham" },
+      "given_name": "Alexander",
+      "family_name": "Durham",
+      "email_verified": true,
+      "verified": true,
+      "language": "en",
+      "email": "wvaviator@gmail.com",
+      "emails": [{ "value": "wvaviator@gmail.com", "type": "account" }],
+      "photos": [
+        {
+          "value": "https://lh3.googleusercontent.com/a/AEdFTp5SpQ_yYDzBOAjf-cwvyusqrtk_0dau_tmkuB1q88E=s96-c",
+          "type": "default"
+        }
+      ],
+      "picture": "https://lh3.googleusercontent.com/a/AEdFTp5SpQ_yYDzBOAjf-cwvyusqrtk_0dau_tmkuB1q88E=s96-c",
+      "_raw": "{\n  \"sub\": \"102784215597793508888\",\n  \"name\": \"Alexander Durham\",\n  \"given_name\": \"Alexander\",\n  \"family_name\": \"Durham\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/AEdFTp5SpQ_yYDzBOAjf-cwvyusqrtk_0dau_tmkuB1q88E\\u003ds96-c\",\n  \"email\": \"wvaviator@gmail.com\",\n  \"email_verified\": true,\n  \"locale\": \"en\"\n}",
+      "_json": {
+        "sub": "102784215597793508888",
+        "name": "Alexander Durham",
+        "given_name": "Alexander",
+        "family_name": "Durham",
+        "picture": "https://lh3.googleusercontent.com/a/AEdFTp5SpQ_yYDzBOAjf-cwvyusqrtk_0dau_tmkuB1q88E=s96-c",
+        "email": "wvaviator@gmail.com",
+        "email_verified": true,
+        "locale": "en"
+      }
+    }
+  }
+}

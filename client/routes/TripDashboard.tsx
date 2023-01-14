@@ -1,10 +1,11 @@
-import { Grid } from '@mui/material';
+import { Box } from '@mui/material';
+import { ObjectId } from 'mongoose';
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { ITrip } from '../../src/models/trip';
+import PackingList from '../components/PackingList/PackingList';
 import TripSummary from '../components/TripSummary/TripSummary';
 import WeatherSummary from '../components/Weather/Weather';
-
 export const loader = async ({ params }: { params: any }) => {
   const { tripId } = params;
   const response = await fetch(`/api/trips/${tripId}`);
@@ -13,14 +14,19 @@ export const loader = async ({ params }: { params: any }) => {
 };
 
 const TripDashboard = () => {
-  const trip = useLoaderData() as ITrip;
+  const trip = useLoaderData() as ITrip & { _id: ObjectId };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={7}>
+    <Box
+      display="grid"
+      gridTemplateColumns="repeat(12, 1fr)"
+      gridTemplateRows="repeat(5, 1fr)"
+      gap={2}
+    >
+      <Box gridColumn="span 7" gridRow="span 4">
         <TripSummary trip={trip} />
-      </Grid>
-      <Grid item xs={5}>
+      </Box>
+      <Box gridColumn="span 5">
         <WeatherSummary
           lat={trip.destination.location.lat}
           lon={trip.destination.location.lng}
@@ -28,8 +34,11 @@ const TripDashboard = () => {
           start={trip.startDate}
           end={trip.endDate}
         />
-      </Grid>
-    </Grid>
+      </Box>
+      <Box gridColumn="span 5" gridRow="span 5">
+        <PackingList trip={trip} />
+      </Box>
+    </Box>
   );
 };
 
