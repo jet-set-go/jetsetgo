@@ -43,32 +43,6 @@ export const createItem = async (
   }
 };
 
-// export const checkOff = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const { itemId } = req.params;
-//   try {
-//     const trip = res.locals.trip;
-//     trip._id;
-//     const packingList = trip.packingList;
-//     const itemIdx = packingList.findIndex(
-//       (item: TItem & { _id: ObjectId }) => item._id.toString() === itemId
-//     );
-//     if (packingList[itemIdx].checked === true) {
-//       packingList[itemIdx].checked = false;
-//     } else {
-//       packingList[itemIdx].checked = true;
-//     }
-//     trip.save();
-//     res.locals.packingList = trip.packingList;
-//     next();
-//   } catch (e) {
-//     return next(e);
-//   }
-// };
-
 export const checkOff = async (
   req: Request,
   res: Response,

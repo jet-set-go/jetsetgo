@@ -12,6 +12,7 @@ export interface ITrip {
     place_id: string;
     images: string[];
   };
+
   packingList: TItem[];
   startDate: Date;
   endDate: Date;

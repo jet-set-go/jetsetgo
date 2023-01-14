@@ -55,12 +55,10 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   async function handleCreateItem(e: React.MouseEvent) {
     //declare const list and assign the awaited result of response.json
     const newItems = await createItem(input, trip._id.toString());
+    newItems.sort((a, b) => (a.checked ? 1 : -1));
 
-    let checked = newItems.filter((item) => item.checked === true);
-    let notchecked = newItems.filter((item) => item.checked !== true);
-    let packing = notchecked.concat(checked);
     //append  to the list state from backend
-    setItems(packing);
+    setItems(newItems);
     //clear out input when done
 
     setInput("");
@@ -69,11 +67,9 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
   //for todo list...trying to get it to save to DB
   async function handleCheckItem(item: TItem) {
     const newItems = await checkItem(trip._id.toString(), item.toString());
-    let checked = newItems.filter((item) => item.checked === true);
-    let notchecked = newItems.filter((item) => item.checked !== true);
-    let packing2 = notchecked.concat(checked);
-    console.log("pack2", packing2);
-    setItems(packing2);
+    newItems.sort((a, b) => (a.checked ? 1 : -1));
+
+    setItems(newItems);
   }
   //handleDelete gets the argument of the item._id
   async function handleDelete(itemId: TItem) {
@@ -81,19 +77,15 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
       trip._id.toString(),
       itemId.toString()
     );
-    let rest = remainingItems;
-    console.log("delete", rest);
-    let checked = remainingItems.filter((item) => item.checked === true);
-    let notchecked = remainingItems.filter((item) => item.checked !== true);
-    let updatedList = notchecked.concat(checked);
-
-    setItems(updatedList);
+    remainingItems.sort((a, b) => (a.checked ? 1 : -1));
+    setItems(remainingItems);
   }
 
   //will grab the items associated with the trip and update everytime it changes
   useEffect(() => {
     async function fetchItems() {
-      const newItems = await getItems(trip._id.toString());
+      const newItems = await getItems(trip._id);
+      newItems.sort((a, b) => (a.checked ? 1 : -1));
       setItems(newItems);
     }
     fetchItems();
