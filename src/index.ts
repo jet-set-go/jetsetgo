@@ -10,7 +10,6 @@ import session from "express-session";
 import path from "path";
 import "./controllers/googleAuth";
 import mongoose from "mongoose";
-import PackingList from "../client/components/packinglist/PackingList";
 dotenv.config();
 
 mongoose
