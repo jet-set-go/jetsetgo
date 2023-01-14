@@ -1,48 +1,61 @@
-import express, { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import passport from 'passport';
-import { loginWithEmailAndPw, oauthCreateUserOrUpdateSessionIfExists } from '../controllers/authController';
+import {
+  authenticateUser,
+  loginWithEmailAndPw,
+  registerWithEmailAndPw,
+} from '../controllers/authController';
 
 const router = Router();
 
-interface User extends Express.User{
-    displayName: string;
-};
+// Google Auth Routes
 
-//session middleware
-function isLoggedIn(req: Request, res: Response, next: NextFunction){
-    req.user ? next() : res.sendStatus(401);
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
+
+router.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/auth/google/failure',
+  }),
+  (req: Request, res: Response) => {
+    res.redirect('/');
   }
-  //Login path
-  router.get('/google',
-    passport.authenticate('google', { scope:
-        [ 'email', 'profile' ] }
-  ));
-  
-  router.get( '/google/callback',
-      passport.authenticate( 'google', {
-          successRedirect: '/auth/protected',
-          failureRedirect: '/auth/google/failure'
-  }));
-  
-  router.get ('/protected', isLoggedIn, oauthCreateUserOrUpdateSessionIfExists, (req: Request, res: Response) => {
-    
-    res.send(`Hello, you - ${res.locals.username} - are logged in!`)
-  })
-  
-  router.get ('/google/failure', (req: Request, res: Response) => {
-    res.send('Failure');
-  })
+);
 
-  router.get('/signout', (req: Request, res: Response) => {
-    req.logout();
-    req.session.destroy();
-    res.send('Goodbye!')
-  })
+router.get('/google/failure', (req: Request, res: Response) => {
+  res.send('Failure');
+});
 
-//manual login routes
 
+// Manual Auth Routes
+
+router.post(
+  '/register',
+  registerWithEmailAndPw,
+  loginWithEmailAndPw,
+  (req: Request, res: Response) => {
+    res.status(200).json(res.locals.user);
+  }
+  );
+  
   router.post('/login', loginWithEmailAndPw, (req: Request, res: Response) => {
-    res.send(200).json(res.locals.user);
-  })
-
+    res.status(200).json(res.locals.user);
+  });
+  
+  // Other Routes
+  
+  router.get('/user', authenticateUser, (req: Request, res: Response) => {
+    return res.status(200).json(req.user);
+  });
+  
+  router.get('/signout', (req: Request, res: Response) => {
+    req.logout((err: any) => {
+      return res.status(500).send(err);
+    });
+    res.status(200).send();
+  });
+  
 export default router;

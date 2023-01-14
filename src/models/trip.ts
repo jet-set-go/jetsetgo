@@ -31,7 +31,7 @@ export const tripSchema = new mongoose.Schema<ITrip>(
         lng: { type: Number, required: true },
       },
       place_id: { type: String, required: true },
-      images: { type: String },
+      images: [{ type: String }],
     },
     packingList: [
       {

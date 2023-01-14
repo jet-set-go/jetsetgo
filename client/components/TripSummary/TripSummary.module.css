@@ -11,3 +11,10 @@
   justify-content: flex-end;
   height: 100%;
 }
+
+.media {
+  height: 240px;
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+}
