@@ -16,8 +16,8 @@ html {
   position: relative;
   width: 100%;
   height: auto;
-  min-width: 400px;
-  max-width: 600px;
+  /* min-width: 400px;
+  max-width: 600px; */
   /* min-height: 60px; */
   padding: 20px;
   /* styling: */

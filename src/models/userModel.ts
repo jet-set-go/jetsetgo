@@ -21,7 +21,7 @@ const userSchema = new Schema<IUser>(
     sso: { type: Boolean },
     firstName: { type: String },
     lastName: { type: String },
-    username: { type: String, unique: true },
+    username: { type: String },
     password: { type: String },
     displayName: { type: String },
     photos: [{ value: String }],
