@@ -69,7 +69,6 @@ router.post('/login', loginWithEmailAndPw, (req: Request, res: Response) => {
 });
 
 router.get('/user', authenticateUser, (req: Request, res: Response) => {
-  console.log('Verified user: ', req.user);
   return res.status(200).json(req.user);
 });
 

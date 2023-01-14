@@ -20,11 +20,6 @@ passport.use(
       profile: any,
       done: any
     ) {
-      console.log(profile);
-      // User.findOne({ userId: profile.id, email: profile.email }, { upsert: true }, (err: any, user: object) => {
-      //     console.log(err);
-      // return done(err, user);
-      // });
       done(null, profile);
     }
   )
@@ -33,13 +28,9 @@ passport.use(
 // used to serialize the user for the session
 passport.serializeUser(function (user: any, done) {
   done(null, user);
-  // where is this user.id going? Are we supposed to access this anywhere?
 });
 
 // used to deserialize the user
 passport.deserializeUser(function (user: any, done) {
-  // User.findOne({userId: id}, function(err: any, user: any) {
-  //     done(err, user);
-  // });
   done(null, user);
 });

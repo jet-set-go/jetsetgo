@@ -70,7 +70,6 @@ export const getUser = async (
 ) => {
   try {
     const { userId } = req.session;
-    console.log('This is the userId from the session', userId);
     if (!userId) {
       return next();
     }
@@ -84,50 +83,6 @@ export const getUser = async (
     return next(error);
   }
 };
-
-// export const oauthCreateUserOrUpdateSessionIfExists = (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   // const user: User = req.user! as User;
-//   //@ts-ignore
-//   const { email, id, given_name, family_name, photos, displayName } = req.user;
-//   User.findOneAndUpdate(
-//     { email },
-//     { session: req.session.id },
-//     (err: any, user: object) => {
-//       console.log('This is updated user - note session');
-//       console.log(user);
-//       if (err) return next(err);
-//       if (!user) {
-//         User.create(
-//           {
-//             userId: id,
-//             email: email,
-//             sso: true,
-//             firstName: given_name,
-//             lastName: family_name,
-//             username: email,
-//             displayName: displayName,
-//             photos: photos,
-//           },
-//           (err: any, user: object) => {
-//             console.log('This is created user');
-//             console.log(user);
-//             res.locals.username = email;
-//             if (err) {
-//               return next(err);
-//             }
-//             return next();
-//           }
-//         );
-//       }
-//       res.locals.username = email;
-//       return next();
-//     }
-//   );
-// };
 
 export const authenticateUser = async (
   req: Request,

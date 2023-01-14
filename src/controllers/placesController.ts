@@ -76,6 +76,13 @@ export const getPlaceDetails = async (
   }
 };
 
+/**
+ * A middleware function that fetches place photos from the Google Places API. This must be invoked after middleware function getPlaceDetails. The photo urls will be attached to the response object as res.locals.photos.
+ * @param req
+ * @param res
+ * @param next
+ * @returns
+ */
 export const getPlacePhotos = async (
   req: Request,
   res: Response,
