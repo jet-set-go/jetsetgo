@@ -25,6 +25,8 @@ const TripDashboard = () => {
           lat={trip.destination.location.lat}
           lon={trip.destination.location.lng}
           location={trip.destination.name}
+          start={trip.startDate}
+          end={trip.endDate}
         />
       </Grid>
     </Grid>

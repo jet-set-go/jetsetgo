@@ -1,100 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import styles from './Weather.module.css'
 import Switch from '@mui/material/Switch'
-import WeatherIcon from './WeatherIcon'
+import WeatherIcon, { icons } from './WeatherIcon'
 
-interface Props {
-  lat: number
-  lon: number
-  location: string
-}
 
-//interface model of response from api call
-interface ApiResponse {
-  current: {
-    dt: number
-    sunset:number
-    temp: number
-    weather: [
-      {
-        main: string
-        description: string
-      }
-    ]
-  }
-  daily: [
-    {
-      temp: {
-        min: number
-        max: number
-      }
-    }
-  ]
-}
-const imgOpts = new Map()
-imgOpts.set('Drizzle', './images/rainy-jetsetgo.jpg')
-imgOpts.set('Rain', './images/rainy-jetsetgo.jpg')
-imgOpts.set('Snow', './images/snowy-jetsetgo.jpg')
-imgOpts.set('Haze', './images/foggyMist-jetsetgo.jpg')
-imgOpts.set('Smoke', './images/foggyMist-jetsetgo.jpg')
-imgOpts.set('Mist', './images/foggyMist-jetsetgo.jpg')
-imgOpts.set('Dust', './images/rainy-jetsetgo.jpg')
-imgOpts.set('Fog', './images/rainy-jetsetgo.jpg')
-imgOpts.set('Sand', './images/rainy-jetsetgo.jpg')
-imgOpts.set('Ash', './images/rainy-jetsetgo.jpg')
-imgOpts.set('Squall', './images/rainy-jetsetgo.jpg')
-imgOpts.set('Tornado', './images/stormy-jetsetgo.jpg')
-imgOpts.set('Clear', './images/sunny-jetsetgo.jpg')
-imgOpts.set('Clear-night', './images/clear-night-jetsetgo.jpg')
-imgOpts.set('Clouds', './images/cloudy-jetsetgo.jpg')
-
-//use unix code from apiCall to format date/time
-const getDateTime = (unixCode: number) => {
-  const date = new Date(unixCode * 1000)
-  let [hour, minutes] = [date.getHours(), date.getMinutes().toString()]
-  //get HH:MM AM format
-  let amPM = hour >= 12 ? 'PM' : 'AM'
-  hour = hour % 12 ? hour % 12 : 12
-  minutes = parseInt(minutes) < 10 ? '0' + minutes : minutes
-  return [date.toDateString(), `${hour}:${minutes} ${amPM}`]
-}
-
-const WeatherSummary: React.FC<Props> = ({ lat, lon, location }) => {
+export default function WeatherSummary({ lat, lon, location, start, end }: Props): React.ReactNode {
   const [apiResults, setApiResults] = useState<ApiResponse | null>(null)
   const [scale, setscale] = useState('imperial')
-  const [img, setImg] = useState(imgOpts.get('Clear'))
+  const [img, setImg] = useState(icons.get('Clear')[1])
+  const url = `/api/weather?lat=${lat}&lon=${lon}&scale=metric`
 
-  const url = `/api/weather?lat=${lat}&lon=${lon}&scale=${scale}`
   useEffect(() => {
-    const getData = async (url: string) => {
-      const response = await fetch(url)
-      const data = await response.json()
-      setApiResults(data)
-
-      if ((data.current.weather[0].main === 'Clear') && (data.current.dt >= data.current.sunset))
-         setImg(imgOpts.get('Clear-night'))
-      else
-      setImg(imgOpts.get(data.current.weather[0].main))
-    }
-    getData(url)
+    getData(url, setApiResults, setImgState, setImg)
   }, [lat, lon, scale])
 
-  return !apiResults ? (
-    <div className={styles.container}>...loading</div>
-  ) : (
+  if (!apiResults) return <div className={styles.container}>...loading</div>
+
+  const temperature =
+    scale === 'metric'
+      ? Math.floor(apiResults.current.temp)
+      : Math.floor(apiResults.current.temp * 1.8) + 32
+
+  return (
     <div className={styles.container}>
-        <img src={ img } alt="img"/>
+      <img src={img} alt="img" />
       <div className={styles.containerLeft}>
         <div className={styles.containerConditions}>
           <WeatherIcon condition={apiResults.current.weather[0].main} />
           <div>{apiResults.current.weather[0].main}</div>
         </div>
         <div className={styles.containerTemps}>
-          <div className={styles.currentTemp}>
-            {Math.floor(apiResults.current.temp) >= 10
-              ? Math.floor(apiResults.current.temp)
-              : '0' + Math.floor(apiResults.current.temp)}
-          </div>
+          <div className={styles.currentTemp}>{temperature.toString()}</div>
           <div>{scale === 'imperial' ? 'F' : 'C'}</div>
           <div>
             <Switch
@@ -105,13 +41,80 @@ const WeatherSummary: React.FC<Props> = ({ lat, lon, location }) => {
       </div>
 
       <div className={styles.containerRight}>
-        <div className={styles.time}>{getDateTime(apiResults.current.dt)[1]}</div>
-        <div className={styles.date}>{getDateTime(apiResults.current.dt)[0]}</div>
+        <div className={styles.time}>{getDateTime(apiResults.current.dt * 1000)[1]}</div>
+        <div className={styles.date}>{getDateTime(apiResults.current.dt * 1000)[0]}</div>
         <div className={styles.location}>{location}</div>
       </div>
     </div>
   )
 }
+
+
+function getDateTime(code: number | Date): string[] {
+  const date = new Date(code)
+  let [hour, minutes] = [date.getHours(), date.getMinutes().toString()]
+  //get HH:MM AM format
+  let amPM = hour >= 12 ? 'PM' : 'AM'
+  hour = hour % 12 ? hour % 12 : 12
+  minutes = parseInt(minutes) < 10 ? '0' + minutes : minutes
+  return [date.toDateString(), `${hour}:${minutes} ${amPM}`]
+}
+
+async function getData(
+  url: string,
+  setApiResults: Function,
+  setImgState: Function,
+  setImg: Function
+) {
+  const response = await fetch(url)
+  const data = await response.json()
+  setApiResults(data)
+  setImgState(data, setImg)
+}
+
+function setImgState(data: ApiResponse, setImg: Function) {
+  if (
+    data.current.weather[0].main === 'Clear' &&
+    (data.current.dt >= data.current.sunset || data.current.dt <= data.current.sunrise)
+  )
+    setImg(icons.get('Clear-night')[1])
+  else setImg(icons.get(data.current.weather[0].main)[1])
+}
+
+interface Props {
+  lat: number
+  lon: number
+  location: string
+  start: Date
+  end: Date
+}
+
+//interface model of response from api call
+interface ApiResponse {
+  current: {
+    dt: number
+    sunset: number
+    sunrise: number
+    temp: number
+    weather: [
+      {
+        main: string
+        description: string
+      }
+    ]
+  }
+  daily: [
+    {
+      dt: number
+      temp: {
+        min: number
+        max: number
+      }
+    }
+  ]
+}
+// <div className={styles.time}>{getDateTime(apiResults.current.dt * 1000)[1]}</div>
+// <div className={styles.date}>{getDateTime(apiResults.current.dt * 1000)[0]}</div>
 // CSS TEST COMP
 //   return (
 //     <div className={styles.container}>
@@ -138,5 +141,3 @@ const WeatherSummary: React.FC<Props> = ({ lat, lon, location }) => {
 //     </div>
 //   )
 // }
-
-export default WeatherSummary
