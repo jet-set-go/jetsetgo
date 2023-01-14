@@ -29,6 +29,10 @@ export const createTrip = async (
     const user = req.user as IUser;
     if (!user) throw new Error('Must be logged in to create trips.');
 
+    if (new Date(startDate) > new Date(endDate)) {
+      throw new Error('Start date must be before end date.');
+    }
+
     const trip = {
       name,
 

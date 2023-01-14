@@ -102,7 +102,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
 
   //form is for the bottom of the packing list to add another item
   return (
-    <Card sx={{ width: '64%', maxWidth: '100%', minWidth: '250px' }}>
+    <Card sx={{ width: '100%' }}>
       <CardMedia
         sx={{ height: 70 }}
         image="https://cdn.packhacker.com/2022/06/d78f3bdf-vpl-flatlay.jpg?auto=compress&auto=format&w=1050&h=700&fit=crop"
@@ -115,14 +115,13 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
 
         <List
           sx={{
-            width: '25%',
-            maxWidth: '100%',
+            // maxWidth: '100%',
             height: '40%',
-            position: 'fixed',
+            // position: 'fixed',
             scrollBehavior: 'inherit',
-            maxHeight: '100%',
+            maxHeight: '360px',
             overflow: 'auto',
-            minWidth: '250px',
+            // minWidth: '250px',
           }}
         >
           <CardContent
@@ -189,10 +188,11 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                 size="small"
                 className={styles.addButton}
                 onClick={handleCreateItem}
-                sx={{
-                  backgroundColor: accent2,
-                  '&:hover': { backgroundColor: accent },
-                }}
+                // sx={{
+                //   backgroundColor: accent2,
+                //   '&:hover': { backgroundColor: accent },
+                // }}
+                color="secondary"
                 variant="contained"
               >
                 Add Item

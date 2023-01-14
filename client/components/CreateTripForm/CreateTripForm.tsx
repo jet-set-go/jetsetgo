@@ -62,6 +62,10 @@ const CreateTripForm = () => {
       return;
     }
 
+    if (startTimestamp > endTimestamp) {
+      return;
+    }
+
     const start = new Date(startTimestamp).toISOString();
     const end = new Date(endTimestamp).toISOString();
 
@@ -100,7 +104,7 @@ const CreateTripForm = () => {
   return (
     <div className={styles.container}>
       <img
-        src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1473&q=80"
+        src="https://source.unsplash.com/collection/4378393"
         alt="beach"
         className={styles.background}
         style={fadeIn}
