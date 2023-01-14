@@ -101,7 +101,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
         //image='https://media.istockphoto.com/id/1417417189/vector/vector-set-with-suitcases-bags-and-backpacks-for-travel-different-types-of-hand-luggage.jpg?s=612x612&w=0&k=20&c=D5PAQYQsg18tus_uczB6kmZfNypP_P5OJNi-jalSB3Y='
       ></CardMedia>
       <Grid item xs={3} md={4}>
-        <Typography sx={{ mt: 3, mb: 1 }} variant='subtitle1'>
+        <Typography sx={{ mt: 1, mb: 1 }} variant='subtitle1'>
           Packing List:
         </Typography>
 
