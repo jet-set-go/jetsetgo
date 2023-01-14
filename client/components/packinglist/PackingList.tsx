@@ -188,7 +188,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
                 onClick={handleCreateItem}
                 sx={{
                   backgroundColor: accent2,
-                  "&:hover": { backgroundColor: accentBlue },
+                  "&:hover": { backgroundColor: accent },
                 }}
                 variant='contained'
               >
