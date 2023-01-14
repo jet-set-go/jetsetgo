@@ -62,6 +62,7 @@ const PackingList: React.FC<PackingListProps> = ({ trip }) => {
     //append  to the list state from backend
     setItems(packing);
     //clear out input when done
+
     setInput("");
   }
 
