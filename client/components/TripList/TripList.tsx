@@ -14,48 +14,27 @@ import styles from './TripList.module.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link, useNavigate } from 'react-router-dom';
 import ActionPrompt, { PromptAction } from '../ActionPrompt/ActionPrompt';
-
-interface DummyTrip {
-  id: string;
-  destination: string;
-  startDate: string;
-  endDate: string;
-}
-
-const dummyTrips = [
-  {
-    id: '1',
-    destination: 'Paris',
-    startDate: new Date('2023-08-01').toISOString(),
-    endDate: new Date('2023-08-10').toISOString(),
-  },
-  {
-    id: '2',
-    destination: 'London',
-    startDate: new Date('2023-09-01').toISOString(),
-    endDate: new Date('2023-09-10').toISOString(),
-  },
-  {
-    id: '3',
-    destination: 'New York',
-    startDate: new Date('2023-10-01').toISOString(),
-    endDate: new Date('2023-10-10').toISOString(),
-  },
-];
+import { ITrip } from '../../../src/models/trip';
 
 const TripList = () => {
-  const [deletePrompt, setDeletePrompt] = React.useState<DummyTrip | null>(
-    null
-  );
+  const [deletePrompt, setDeletePrompt] = React.useState<ITrip | null>(null);
+
+  const [trips, setTrips] = React.useState<ITrip[]>([]);
+
+  React.useEffect(() => {
+    const fetchTrips = async () => {
+      const response = await fetch('/api/trips');
+      const data = await response.json();
+      setTrips(data);
+    };
+
+    fetchTrips();
+  }, []);
 
   const navigate = useNavigate();
 
   const handleCreateTrip = () => {
     navigate('/trip/new');
-  };
-
-  const handleDelete = (id: string) => {
-    console.log('delete', id);
   };
 
   const deletePromptActions: PromptAction[] = [
@@ -65,8 +44,16 @@ const TripList = () => {
     },
     {
       label: 'Delete',
-      onClick: () => {
-        handleDelete(deletePrompt!.id);
+      onClick: async () => {
+        if (!deletePrompt) return;
+        const deleteId = deletePrompt.id;
+
+        const newTrips = trips.filter((trip) => trip.id !== deleteId);
+        setTrips(newTrips);
+
+        await fetch(`/api/trips/${deleteId}`, {
+          method: 'DELETE',
+        });
         setDeletePrompt(null);
       },
     },
@@ -78,7 +65,7 @@ const TripList = () => {
         open={Boolean(deletePrompt)}
         onClose={() => setDeletePrompt(null)}
         title="Delete Trip"
-        content={`Are you sure you want to permanently delete your trip to ${deletePrompt?.destination}?`}
+        content={`Are you sure you want to permanently delete your trip ${deletePrompt?.name} to ${deletePrompt?.destination.name}?`}
         actions={deletePromptActions}
       />
       <Box mb={2}>
@@ -93,13 +80,13 @@ const TripList = () => {
       <Divider />
       <Box mt={2}>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {dummyTrips.map((trip) => (
+          {trips.map((trip) => (
             // TODO: Link component should link to dashboard for specific trip once routing is fleshed out
             <div key={trip.id} className={styles.card}>
               <Link to={`/trip/${trip.id}`} className={styles.link}>
                 <ListItem key={trip.id}>
                   <ListItemText
-                    primary={trip.destination}
+                    primary={trip.name}
                     secondary={
                       <Typography
                         sx={{ display: 'inline' }}

@@ -1,1 +1,1 @@
-export const API_URL = "http:localhost:3000/:id";
+export const API_URL = "/api/packingList";

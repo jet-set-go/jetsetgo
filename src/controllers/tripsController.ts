@@ -45,8 +45,23 @@ export const getTrip = async (
   const { id } = req.params;
   try {
     const trip = await Trip.findById(id);
+    if (trip === null) throw new Error('cannot get trip id');
     res.locals.trip = trip;
 
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const deleteTrip = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const trip = res.locals.trip;
+    await trip.remove();
     return next();
   } catch (error) {
     return next(error);

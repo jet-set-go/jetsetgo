@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
-
+import { TItem } from "../../client/components/PackingList/api/getItems";
 export interface ITrip {
   name: string;
+  id: string;
   destination: {
     name: string;
     location: {
@@ -11,10 +12,7 @@ export interface ITrip {
     place_id: string;
     images: string[];
   };
-  packingList: {
-    name: string;
-    checked: boolean;
-  }[];
+  packingList: TItem[];
   startDate: Date;
   endDate: Date;
   login: {

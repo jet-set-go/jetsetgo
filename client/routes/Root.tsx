@@ -14,7 +14,7 @@ const Root = () => {
       {
         text: 'New Trip',
         icon: <AddCircleOutlineIcon />,
-        onClick: () => navigate('trip/add'),
+        onClick: () => navigate('trip/new'),
       },
       {
         text: 'My Trips',
@@ -26,6 +26,7 @@ const Root = () => {
         icon: <AccountBoxIcon />,
         onClick: () => navigate('profile'),
       },
+
       { text: 'Logout', icon: <LogoutIcon />, onClick: () => {} },
     ],
     [navigate]
