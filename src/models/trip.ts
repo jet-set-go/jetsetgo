@@ -10,10 +10,15 @@ export interface ITrip {
       lng: number;
     };
     place_id: string;
+    images: string[];
   };
   packingList: TItem[];
   startDate: Date;
   endDate: Date;
+  login: {
+    userId: string;
+    email: string;
+  };
 }
 
 export const tripSchema = new mongoose.Schema<ITrip>(
@@ -26,6 +31,7 @@ export const tripSchema = new mongoose.Schema<ITrip>(
         lng: { type: Number, required: true },
       },
       place_id: { type: String, required: true },
+      images: { type: String },
     },
     packingList: [
       {
@@ -35,12 +41,21 @@ export const tripSchema = new mongoose.Schema<ITrip>(
     ],
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
+    login: {
+      userId: { type: String },
+      email: { type: String },
+    },
   },
   {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
   }
 );
+
+export const testSchema = new mongoose.Schema({
+  name: { type: String },
+  number: { type: Number },
+});
 
 const Trip =
   (mongoose.models.Trip as mongoose.Model<ITrip>) ||
