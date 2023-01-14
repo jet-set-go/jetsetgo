@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Trip from '../models/trip';
+import { IUser } from '../models/userModel';
 
 /**
  * A middleware function for creating a new trip. Must be called after the getPlaceDetails middleware. Expects name, startDate, and endDate in the request body. The resulting trip will be attached to the response object as res.locals.trip.
@@ -19,17 +20,18 @@ export const createTrip = async (
       throw new Error('Must provide name, startDate, and endDate.');
 
     const placeData = res.locals.place;
+    console.log(placeData);
     if (!placeData)
       throw new Error(
         'Middleware function createTrip must be invoked after getPlaceDetails.'
       );
 
-    const user = req.user;
+    const user = req.user as IUser;
     if (!user) throw new Error('Must be logged in to create trips.');
 
     const trip = {
       name,
-      
+
       destination: {
         name: placeData.name,
         place_id: placeData.place_id,
@@ -37,7 +39,11 @@ export const createTrip = async (
           lat: placeData.geometry.location.lat,
           lng: placeData.geometry.location.lng,
         },
-        images: placeData.photos.slice(0, 3),
+        images: res.locals.photos || [],
+      },
+      login: {
+        email: user.email,
+        userId: user.id,
       },
       startDate,
       endDate,
@@ -69,14 +75,14 @@ export const getTrip = async (
     const { id } = req.params;
     if (!id) throw new Error('Must provide id in request params.');
 
-    const user = req.user;
+    const user = req.user as IUser;
     if (!user) throw new Error('Must be logged in to get trip information.');
 
     const trip = await Trip.findById(id);
     if (!trip) throw new Error('Trip not found.');
 
-    // if (trip.user.id !== user.id)
-    //   throw new Error('Trip belongs to another user.');
+    if (trip.login.userId !== user.id)
+      throw new Error('Trip belongs to another user.');
 
     res.locals.trip = trip;
     return next();
@@ -98,7 +104,7 @@ export const deleteTrip = async (
   next: NextFunction
 ) => {
   try {
-    const user = req.user;
+    const user = req.user as IUser;
     if (!user) throw new Error('Must be logged in to delete trips.');
 
     const trip = res.locals.trip;
@@ -106,8 +112,8 @@ export const deleteTrip = async (
       throw new Error(
         'Middleware function deleteTrip must be invoked after getTrip.'
       );
-    // if (trip.user.id !== user.id)
-    //   throw new Error('Trip belongs to another user.');
+    if (trip.login.userId !== user.id)
+      throw new Error('Trip belongs to another user.');
     await trip.remove();
     return next();
   } catch (error) {
@@ -128,10 +134,12 @@ export const getAllTrips = async (
   next: NextFunction
 ) => {
   try {
-    const user = req.user;
+    const user = req.user as IUser;
     if (!user) throw new Error('Must be logged in to get trip information.');
 
-    const trips = await Trip.find().exec();
+    const trips = await Trip.find({
+      login: { userId: user.id, email: user.email },
+    }).exec();
     res.locals.trips = trips;
 
     return next();

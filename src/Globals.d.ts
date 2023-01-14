@@ -3,7 +3,7 @@ declare module '*.css' {
   export = content;
 }
 
-import "express-session";
+import 'express-session';
 declare module 'express-session' {
   export interface SessionData {
     userId: string;

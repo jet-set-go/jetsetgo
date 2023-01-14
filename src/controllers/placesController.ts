@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import {
   Client,
   PlaceAutocompleteType,
+  PlacePhoto,
 } from '@googlemaps/google-maps-services-js';
 
 const client = new Client({});
@@ -69,6 +70,45 @@ export const getPlaceDetails = async (
     });
 
     res.locals.place = data.result;
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getPlacePhotos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const placeDetails = res.locals.place;
+    if (!placeDetails)
+      throw new Error(
+        'Middleware function getPlacePhotos must be invoked after getPlaceDetails.'
+      );
+
+    const photos = [];
+
+    for (let i = 0; i < 3; i++) {
+      const photo = placeDetails.photos[i];
+      if (!photo) break;
+      const response = await client.placePhoto({
+        params: {
+          photoreference: photo.photo_reference,
+          maxwidth: 400,
+          key: process.env.GOOGLE_MAPS_API_KEY || '',
+        },
+        responseType: 'arraybuffer',
+      });
+
+      // Extracts the URL from the repsonse, ignoring the actual image data
+      const url = response.request._redirectable._options.href as string;
+      photos.push(url);
+    }
+
+    res.locals.photos = photos;
+
     return next();
   } catch (error) {
     return next(error);

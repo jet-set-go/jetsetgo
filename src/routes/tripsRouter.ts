@@ -1,4 +1,4 @@
-import { getPlaceDetails } from '../controllers/placesController';
+import { getPlaceDetails, getPlacePhotos } from '../controllers/placesController';
 import { Request, Response, Router } from 'express';
 import {
   createTrip,
@@ -25,6 +25,7 @@ router.post(
   '/',
   authenticateUser,
   getPlaceDetails,
+  getPlacePhotos,
   createTrip,
   (req: Request, res: Response) => {
     console.log('Created trip: ', res.locals.trip);
